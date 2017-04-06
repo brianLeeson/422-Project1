@@ -1,7 +1,18 @@
 project design
 
+simple python(?) GUI. user preferences: weights, group size, etc
+use google surveys to collect information from users. download results into a csv file
+import and parse csv files and create student instances
+group class has-a student.
+apply some function to sort all students.
+display sorted groups
+allow user to move people from group to group. also to change settings and resort
+
+
+how do we allow the end user to change survey questions? all Q'a after x are questions on a scale?
 
 here's the core
+gui: set weights, import csv, sorts, (changing weights, changing groups?)
 
 
 devide up the project. who does what
