@@ -3,7 +3,7 @@ Author(s): Brian Leeson
 
 """
 
-from Student import *
+import Student
 
 
 def process(fileName):
@@ -21,7 +21,7 @@ def process(fileName):
 		for line in csvFile:
 			# TODO parse line. we need to define what our google forms will be
 
-			student = Student("FAKE NAME", ["FAKE CRITERIA"])
+			student = Student.Student("FAKE NAME", ["FAKE CRITERIA"])
 			studentList.append(student)
 
 	return studentList

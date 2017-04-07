@@ -2,11 +2,13 @@
 Author(s): Brian Leeson
 
 """
-from Classroom import *
-from tkinter import *
 
-app = Tk()
-classroom = Classroom()
+import Classroom
+import tkinter
+import fileProcess
+
+app = tkinter.Tk()
+classroom = Classroom.Classroom()
 
 print("I ran a test app")
 
