@@ -1,3 +1,8 @@
+"""
+Author(s): Brian Leeson
+
+"""
+
 class Student:
 	""" 
 	This class will represent an individuals survey results

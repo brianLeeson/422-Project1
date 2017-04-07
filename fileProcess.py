@@ -1,3 +1,8 @@
+"""
+Author(s): Brian Leeson
+
+"""
+
 from Student import *
 
 
