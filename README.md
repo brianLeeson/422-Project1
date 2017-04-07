@@ -5,6 +5,11 @@ In order of branching, the project authors are:
 2. Jamie Zimmerman
 3. 
 
+Description:
+This project attempts to solve the problem of sorting student into groups for the 422 course
+Students are asked to fill out a short survey about themselves and are sorted into groups
+based on survey data.
+
 
 Dependencies:
 python 3.*

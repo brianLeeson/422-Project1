@@ -11,7 +11,8 @@ class Classroom:
 		self._groupList = []
 		# TODO Is this how we want our weights to look?
 		# We could break them out into individual attributes
-		self.weights = []
+		self_.weights = []
+		self._groupSize = 3
 
 	def getStudentList(self):
 		return self._studentList
@@ -28,5 +29,11 @@ class Classroom:
 		return None
 
 	# TODO Getters and setters
+	# Note: imo weight should be set by setters, not at instantiation.
 
+	def getGroupSize(self):
+		return self._groupSize
 
+	def setGroupSize(self, groupSize):
+		self._groupSize = groupSize
+		return None
