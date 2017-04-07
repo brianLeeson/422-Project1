@@ -10,7 +10,10 @@ class Student:
 		self._criteria = criteria
 
 	def __str__(self):
-		return self.getName()
+		return self.getName() + " " + self.getUID()
+
+	def __cmp__(self, other):
+		return self.getUID() == other.getUID()
 
 	def getName(self):
 		return self._name
