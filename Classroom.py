@@ -11,7 +11,7 @@ class Classroom:
 		self._groupList = []
 		# TODO Is this how we want our weights to look?
 		# We could break them out into individual attributes
-		self_.weights = []
+		self._weights = []
 		self._groupSize = 3
 
 	def getStudentList(self):
