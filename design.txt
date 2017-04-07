@@ -17,10 +17,10 @@ gui: set weights, import csv, sorts, (changing weights, changing groups?)
 risk: what if google forms doesn't do what we want it do to. GUI or algorithm could be a lot more work.
 
 devide up the project. who does what
-Amie
+Amie: algorith
 
-Brian
+Brian: GUI
 
-Jamie
+Jamie: Forms/Input
 
 5 min presentation with slides
