@@ -1,4 +1,4 @@
-project design
+project design - Brian's Notes
 
 simple python(?) GUI. user preferences: weights, group size, etc
 use google surveys to collect information from users. download results into a csv file
