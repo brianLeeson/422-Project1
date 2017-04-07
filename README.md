@@ -14,14 +14,9 @@ based on survey data.
 Dependencies:
 python 3.*
 
-Instructions:
-
-To run the application:
-
- make sure all dependencies are installed
-
- make and send out a google form survey # TODO: elaborate. link to template?
-
- after all responses are gathered, export the google form csv
-
- run groupApp.py
+Instructions:  
+To run the application:  
+ make sure all dependencies are installed  
+ make and send out a google form survey # TODO: elaborate. link to template?  
+ after all responses are gathered, export the google form csv  
+ run groupApp.py  
