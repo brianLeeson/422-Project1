@@ -1,17 +1,12 @@
 class StudentSummary:
 	""" 
-	
+	This class will represent an individuals survey results
 	"""
 
-	def __init__(self, name, UID, criteria):
-		"""
-		This function will represent an individuals survey results
-		:param name: student name
-		:param UID: UUID. *Can't* be student ID. FERPA
-		:param criteria: a list of values? individual arguments?
-		"""
+	def __init__(self, name, criteria):
 		self._name = name
-		self._UID = UID
+		# implement UID as a UUID? *Can't* be student ID. FERPA
+		self._UID = 0  # TODO
 		self._criteria = criteria
 
 	def __str__(self):
@@ -23,4 +18,13 @@ class StudentSummary:
 	def setName(self, name):
 		self._name = name
 		return None
+
+	def getUID(self):
+		return self. _UID
+
+	def setUID(self, UID):
+		self._UID = UID
+		return None
+
+	# TODO figure out how criteria is represented
 
