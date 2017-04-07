@@ -14,6 +14,7 @@ how do we allow the end user to change survey questions? all Q'a after x are que
 here's the core
 gui: set weights, import csv, sorts, (changing weights, changing groups?)
 
+risk: what if google forms doesn't do what we want it do to. GUI or algorithm could be a lot more work.
 
 devide up the project. who does what
 Amie
