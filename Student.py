@@ -9,10 +9,13 @@ class Student:
 	This class will represent an individuals survey results
 	"""
 
-	def __init__(self, name, criteria):
+	# NOTE: I think that any attribute of Student that could be a list should be a tuple.
+	# There might be some aliasing issues we could nip in the bud if we chose tuples
+
+	def __init__(self, name, email, criteria):
+		self._UID = 0  # TODO implement UID as a UUID? *Can't* be student ID. FERPA
 		self._name = name
-		# implement UID as a UUID? *Can't* be student ID. FERPA
-		self._UID = 0  # TODO
+		self._email = email
 		self._criteria = criteria
 
 	def __str__(self):

@@ -37,3 +37,29 @@ class Classroom:
 	def setGroupSize(self, groupSize):
 		self._groupSize = groupSize
 		return None
+
+	def sortIntoTeams(self):
+		"""
+		function sorts self._studentList into groups of self._groupSize
+		based on an algorithm
+		then sets that sorted list to self._groupList
+		returns None
+		"""
+		# initial algorithm sorts first three into a group, then next three, etc.
+		# TODO: Make algorithm better
+
+		groupSize = self.getGroupSize()
+		stList = self.getStudentList()[:]  # make copy of student list
+		groupList = []
+
+		while len(stList) > 0:
+			# append first three members
+			groupList.append(stList[:groupSize+1])
+			# create new list minus first three members
+			stList = stList[groupSize:]
+
+		self.setGroupList(groupList)
+
+		return None
+
+
