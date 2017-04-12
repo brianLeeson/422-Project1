@@ -5,6 +5,13 @@ Author(s): Brian Leeson
 
 import Student
 
+def timestamp(meeting_time):
+	'''
+	input -> string, representation of a datetime meeting time
+	output -> datetime object
+	'''
+	#TODO determine if we need this function at all
+	return
 
 def process(fileName):
 	"""
