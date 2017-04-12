@@ -2,7 +2,7 @@
 Author(s): Brian Leeson + Jamie Zimmerman
 
 """
-
+import datetime
 
 class Student:
 	""" 
@@ -23,10 +23,22 @@ class Student:
 					'Java': 0,
 					'JavaScript': 0,
 					'C': 0,
-					'C++': 0}
+					'C++': 0,
+					'PHP': 0,
+					'HTML': 0,
+					'SQL': 0,
+					'Bash/Unix': 0}
+		self.availability = {'Monday': [], #the value is a list of datetime objects (possibly)
+					'Tuesday': [],
+					'Wednesday': [],
+					'Thursday': [],
+					'Friday': []}
+		self.teammates = [] #list of student Objects - recursive relation
 
 	def __str__(self):
-		return self.getName() + " " + self.getUID()
+		#TODO fix this usage - throws a type error because it can't print int type (from UID)
+		# example, when you call print(student)
+		return self.getName()
 
 	def __cmp__(self, other):
 		return self.getUID() == other.getUID()
@@ -55,6 +67,29 @@ class Student:
 		return self.codeExperience
 	def setCodeExperience(self, tool, capability):
 		self.codeExperience[tool] = capability
+		return None
+	def getAvailability(self):
+		'''
+		output -> dictionary representation of student's availability chart
+			may want to add specifying parameters that narrow down for a certain day
+		'''
+		return self.availability
+	def setAvailability(self, day, time):
+		'''
+		input:
+			self -> class
+			day -> string of day
+			time -> datetime object OR string of datetime
+		function keys into students availiability schedule and adds that block of time to the right day
+		'''
+		self.availability[day].append(time)
+		return None
+
+	def setTeammates(self, buddy):
+		self.teammates.append(buddy)
+		return None
+	def getTeammates(self):
+		return self.teammates
 	# TODO figure out how criteria is represented
 
 
@@ -65,3 +100,17 @@ if __name__ == '__main__':
 	print(student.getCodeExperience())
 	student.setOverallExperience(4)
 	print('{} is this qualified: {}'.format(student.getName(), student.getOverallExperience()))
+	
+	#testing availability attributes
+	print(student.getAvailability())
+	student.setAvailability('Thursday', '12:00-2:00')
+	print(student.getAvailability())
+	student.setAvailability('Thursday', '2:00-4:00')
+	print(student.getAvailability())
+	
+	#testing requested teammates list
+	friend = Student('Jamie', 'jamie@yellow.edu', 3)
+	student.setTeammates(friend)
+	for s in student.getTeammates():
+		print(s)
+	print(student)
