@@ -12,11 +12,10 @@ class Student:
 	# NOTE: I think that any attribute of Student that could be a list should be a tuple.
 	# There might be some aliasing issues we could nip in the bud if we chose tuples
 
-	def __init__(self, name, email, criteria):
+	def __init__(self, name, email):
 		self.UID = 0  # TODO implement UID as a UUID? *Can't* be student ID. FERPA
 		self.name = name
 		self.email = email
-		self.criteria = criteria
 		
 		self.overallExperience = 0 #overall experience score - how many upper div CS classes completed
 		self.codeExperience = {'Python': 0,
@@ -95,7 +94,7 @@ class Student:
 
 #-----------------------------------Sandbox Area -------------------------------------------------#
 if __name__ == '__main__':
-	student = Student('Brian', 'brian@brian.com', 5)
+	student = Student('Brian', 'brian@brian.com')
 	student.setCodeExperience('Python', 8)
 	print(student.getCodeExperience())
 	student.setOverallExperience(4)
@@ -109,7 +108,7 @@ if __name__ == '__main__':
 	print(student.getAvailability())
 	
 	#testing requested teammates list
-	friend = Student('Jamie', 'jamie@yellow.edu', 3)
+	friend = Student('Jamie', 'jamie@yellow.edu')
 	student.setTeammates(friend)
 	for s in student.getTeammates():
 		print(s)
