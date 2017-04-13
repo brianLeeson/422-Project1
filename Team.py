@@ -38,9 +38,9 @@ class Team:
 #-------------------------------------------- Sandbox Area --------------------------------------#
 if __name__ == '__main__':
 	team = Team(6)
-	student1 = Student('brian', 'brian@brian.com', 5)
-	student2 = Student('jamie', 'jamie@yellow.com', 3)
-	student3 = Student('amie', 'amie@red.edu', 4)
+	student1 = Student('brian', 'brian@brian.com')
+	student2 = Student('jamie', 'jamie@yellow.com')
+	student3 = Student('amie', 'amie@red.edu')
 	team.setMemberList([student1, student2, student3])
 	for guy in team.getMemberList():
 		print(guy)
