@@ -1,65 +1,88 @@
 """
-Author(s): Brian Leeson
+Author(s): Brian Leeson + Jamie Zimmerman
 
 """
 
 
 class Classroom:
 
-	def __init__(self):
-		self._studentList = []
-		self._groupList = []
+	def __init__(self, section, teacher):
+		self.section = section #'W17', 'S17', etc.
+		self.teacher = teacher #'Michal Young', etc.
+		
+		self.csv_file = '' #the csv file containing all survey responses for this class
+		self.studentList = [] #list of Student objects
+		self.teamList = [] #list of Team objects
+
 		# TODO Is this how we want our weights to look?
 		# We could break them out into individual attributes
-		self._weights = []
-		self._groupSize = 3
+		self.weights = []
+		self.teamSize = 3
+				
+	def getSection(self):
+		return self.section
+	def setSection(self, section):
+		self.section = section
+		return None
+	def getTeacher(self):
+		return self.teacher
+	def setTeacher(self, teacher):
+		self.teacher = teacher
+		return None
+	def getCSV(self):
+		return self.csv_file
+	def setCSV(self, csv_file):
+		self.csv_file = csv_file
+		return None
 
 	def getStudentList(self):
-		return self._studentList
-
+		return self.studentList
 	def setStudentList(self, studentList):
-		self._studentList = studentList
+		self.studentList = studentList
 		return None
 
-	def getGroupList(self):
-		return self._groupList
+	def classroomSize(self):
+		return len(self.studentList)
 
-	def setGroupList(self, groupList):
-		self._groupList = groupList
+	def getTeamList(self):
+		return self.teamList
+	def setTeamList(self, teamList):
+		self.teamList = teamList
 		return None
 
-	# TODO Getters and setters
-	# Note: imo weight should be set by setters, not at instantiation.
-
-	def getGroupSize(self):
-		return self._groupSize
-
-	def setGroupSize(self, groupSize):
-		self._groupSize = groupSize
+	def getTeamSize(self):
+		return self.teamSize
+	def setTeamSize(self, teamSize):
+		self.teamSize = teamSize
 		return None
 
 	def sortIntoTeams(self):
 		"""
-		function sorts self._studentList into groups of self._groupSize
+		function sorts self._studentList into groups of self._teamSize
 		based on an algorithm
-		then sets that sorted list to self._groupList
+		then sets that sorted list to self._teamList
 		returns None
 		"""
 		# initial algorithm sorts first three into a group, then next three, etc.
 		# TODO: Make algorithm better
 
-		groupSize = self.getGroupSize()
+		teamSize = self.getTeamSize()
 		stList = self.getStudentList()[:]  # make copy of student list
-		groupList = []
+		teamList = []
 
 		while len(stList) > 0:
 			# append first three members
-			groupList.append(stList[:groupSize+1])
+			teamList.append(stList[:teamSize+1])
 			# create new list minus first three members
-			stList = stList[groupSize:]
+			stList = stList[teamSize:]
 
-		self.setGroupList(groupList)
+		self.setTeamList(teamList)
 
 		return None
 
-
+#-------------------------------------------- Sandbox Area --------------------------------------#
+if __name__ == '__main__':
+	cs = Classroom('S17', 'Michal Young')
+	students = [1, 2, 3, 'a', '4']
+	cs.setStudentList(students)
+	print(cs.classroomSize())
