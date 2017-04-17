@@ -20,19 +20,19 @@ class Student:
 
 		self.overallExperience = 0  # overall experience score - how many upper div CS classes completed
 		self.codeExperience = {'Python': 0,
-							   'Java': 0,
-							   'JavaScript': 0,
-							   'C': 0,
-							   'C++': 0,
-							   'PHP': 0,
-							   'HTML': 0,
-							   'SQL': 0,
-							   'Bash/Unix': 0}
+							'Java': 0,
+							'JavaScript': 0,
+							'C': 0,
+							'C++': 0,
+							'PHP': 0,
+							'HTML': 0,
+							'SQL': 0,
+							'Bash/Unix': 0}
 		self.availability = {'Monday': [],  # the value is a list of datetime objects (possibly)
-							 'Tuesday': [],
-							 'Wednesday': [],
-							 'Thursday': [],
-							 'Friday': []}
+							'Tuesday': [],
+							'Wednesday': [],
+							'Thursday': [],
+							'Friday': []}
 		self.teammates = []  # list of student Objects - recursive relation
 
 	def __str__(self):
