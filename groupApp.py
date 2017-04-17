@@ -63,7 +63,8 @@ def exportCB():
 		Function exports csv of sort teams to cwd
 		"""
 		# TODO: Need function in file process to call
-
+		fp.export()
+		
 		print("exported")
 
 		return None
