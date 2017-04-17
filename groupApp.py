@@ -88,6 +88,5 @@ exportButton.grid(row=2, column=0)
 canvas = tk.Canvas(app, width=500, height=500, borderwidth=10, bg="white")
 canvas.grid(row=0, column=1)
 
-print("I ran a test app")
 # runs the app
 app.mainloop()
