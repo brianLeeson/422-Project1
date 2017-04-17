@@ -37,12 +37,13 @@ def importCB():
 		path = filedialog.askopenfilename()
 
 		# files process
-		studentCollection = fp.process(path)
+		if len(path):  # if they picked something
+			studentCollection = fp.process(path)
 
-		# assign to classroom class
-		classroom.setStudentList(studentCollection)
+			# assign to classroom class
+			classroom.setStudentList(studentCollection)
 
-		print("imported")
+			print("imported")
 
 		return None
 
