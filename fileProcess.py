@@ -12,7 +12,9 @@ def timestamp(meeting_time):
 	input -> string, representation of a datetime meeting time
 	output -> datetime object
 	"""
+
 	# TODO determine if we need this function at all
+
 	return
 
 
@@ -27,7 +29,7 @@ def process(fileName):
 	with open(fileName, "r") as csvfile:
 		reader = csv.DictReader(csvfile)
 		for row in reader:
-			email = row['Username']
+			duckID = row['Username']
 			name = row['Student Name']
 			pyth = row['Python experience']
 			java = row['Java experience']
@@ -47,7 +49,7 @@ def process(fileName):
 			
 			requests = row["Desired Teammates @uoregon.edu emails (separated by ';')"]  # TODO: store requests
 
-			student = Student(name, email)
+			student = Student(name, duckID)
 			student.setCodeExperience('Python', pyth)
 			student.setCodeExperience('Java', java)
 			# student.setCodeExperience('Js', js) # I think this how you want it.
@@ -68,6 +70,14 @@ def process(fileName):
 			studentList.append(student)
 
 	return studentList
+
+
+def export():
+	"""
+	function exports teams as a csv to the cwd
+	"""
+
+	return None
 
 # ----------------------Sandbox Area--------------------------------------
 if __name__ == '__main__':

@@ -23,50 +23,50 @@ import fileProcess as fp
 # "screen" to view results
 
 # Classroom instance stores data
-classroom = Classroom.Classroom()
+classroom = Classroom.Classroom(12345, "Your boi")
 
 
 # DEFINE FUNCTIONS
 def importCB():
-	"""
-	called when import button clicked
-	function prompts user to select path to csv and
-	process csv
-	"""
-	# prompt user for path
-	path = filedialog.askopenfilename()
+		"""
+		called when import button clicked
+		function prompts user to select path to csv and
+		process csv
+		"""
+		# prompt user for path
+		path = filedialog.askopenfilename()
 
-	# files process
-	studentCollection = fp.process(path)
+		# files process
+		studentCollection = fp.process(path)
 
-	# assign to classroom class
-	classroom.setStudentList(studentCollection)
+		# assign to classroom class
+		classroom.setStudentList(studentCollection)
 
-	print("imported")
+		print("imported")
 
-	return None
+		return None
 
 
 def sortCB():
-	"""
-	Function calls sort on classroom class.
-	"""
-	classroom.sortIntoTeams()
+		"""
+		Function calls sort on classroom class.
+		"""
+		classroom.sortIntoTeams()
 
-	print("sorted")
+		print("sorted")
 
-	return None
+		return None
 
 
 def exportCB():
-	"""
-	Function exports csv of sort teams to cwd
-	"""
-	# TODO: Need function in file process to call
+		"""
+		Function exports csv of sort teams to cwd
+		"""
+		# TODO: Need function in file process to call
 
-	print("exported")
+		print("exported")
 
-	return None
+		return None
 
 
 # create app
