@@ -18,6 +18,8 @@ class Classroom:
 		# We could break them out into individual attributes
 		self.weights = []
 		self.teamSize = 3
+
+		self.sortingSuccess = False
 				
 	def getSection(self):
 		return self.section
