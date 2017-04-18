@@ -1,5 +1,5 @@
 """
-Author(s): Brian Leeson + Jamie Zimmerman
+Author(s): Brian Leeson + Jamie Zimmerman + Amie Corso
 
 """
 import datetime
@@ -12,6 +12,7 @@ class Student:
 
 	# NOTE: I think that any attribute of Student that could be a list should be a tuple.
 	# There might be some aliasing issues we could nip in the bud if we chose tuples
+	# from Amie:  only note on this is that the potential_teams attritube needs to be mutable (list)
 
 	def __init__(self, name, email):
 		self.UID = 0  # TODO implement UID as a UUID? *Can't* be student ID. FERPA
@@ -34,6 +35,14 @@ class Student:
 					'Thursday': [],
 					'Friday': []}
 		self.teammates = []  # list of student Objects - recursive relation
+		self.potential_teams = [] # used during sorting process to keep track of which teams on which a student COULD appear
+		self.assignedTeam = None  # keeps track during sorting process of which team a student is associated with
+								  # final once the sorting process is complete
+
+	def sort_potential_teams(self):
+		self.potential_teams.sort()
+		self.potential_teams.reverse()
+		return None
 
 	def __str__(self):
 		# TODO fix this usage - throws a type error because it can't print int type (from UID)
@@ -42,6 +51,24 @@ class Student:
 
 	def __cmp__(self, other):
 		return self.getUID() == other.getUID()
+
+	def __lt__(self, other):
+		return len(self.potential_teams) < len(other.potential_teams)
+
+	def __le__(self, other):
+		return len(self.potential_teams) <= len(other.potential_teams)
+
+	def __gt__(self, other):
+		return len(self.potential_teams) > len(other.potential_teams)
+
+	def __ge__(self, other):
+		return len(self.potential_teams) >= len(other.potential_teams)
+
+	#def __eq__(self, other):
+		#return self.getUID == other.getUID
+
+	#def __ne__(self, other):
+		#return self.getUID != other.getUID
 
 	def getName(self):
 		return self.name
@@ -94,6 +121,7 @@ class Student:
 		'''
 		self.availability = graph
 		return None
+
 	def setTeammates(self, buddy):
 		self.teammates.append(buddy)
 		return None

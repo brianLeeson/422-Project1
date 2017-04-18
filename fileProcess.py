@@ -84,7 +84,7 @@ def create_time_chart(day_availability_list):
 				new_li[3]=1
 			else: #No available time
 				new_li[4]=1
-				new_li[0:4] = [0 for i in range(4)]
+				new_li[0:] = [0 for i in range(4)]
 		chart[day] = new_li
 	return chart
 
