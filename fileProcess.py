@@ -96,7 +96,6 @@ def export(decided_teams):
 	function writes teams as a csv to cwd
 	output-> None, writing the file is a side effect
 	"""
-	print(decided_teams)
 	with open('team_decisions.csv', 'w') as csvfile:
 		fieldnames = ['Team Number', 'Student 1', 'Student 2', 'Student 3']
 		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
