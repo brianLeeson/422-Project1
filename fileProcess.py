@@ -29,11 +29,11 @@ def process(fileName):
 	with open(fileName, "r") as csvfile:
 		reader = csv.DictReader(csvfile)
 		for row in reader:
-			duckID = row['Username']
+			duckID = row['Your DuckID']
 			name = row['Student Name']
 			pyth = row['Python experience']
 			java = row['Java experience']
-			js = row['Javascript experience']  # TODO: set js experience
+			js = row['Javascript experience']
 			c = row['C experience']
 			cpp = row['C++ experience']
 			php = row['PHP experience']
@@ -47,12 +47,12 @@ def process(fileName):
 			thurs = row['Thursday']
 			fri = row['Friday']
 			
-			requests = row["Desired Teammates @uoregon.edu emails (separated by ';')"]  # TODO: store requests
+			requests = row["Desired Teammates DuckIDs (separated by ';')"]
 
 			student = Student(name, duckID)
 			student.setCodeExperience('Python', pyth)
 			student.setCodeExperience('Java', java)
-			# student.setCodeExperience('Js', js) # I think this how you want it.
+			student.setCodeExperience('Javascript', js)
 			student.setCodeExperience('C', c)
 			student.setCodeExperience('C++', cpp)
 			student.setCodeExperience('PHP', php)
@@ -60,16 +60,47 @@ def process(fileName):
 			student.setCodeExperience('SQL', sql)
 			student.setCodeExperience('Bash/Unix', bash)
 			
-			student.setAvailability('Monday', mon)
-			student.setAvailability('Tuesday', tues)
-			student.setAvailability('Wednesday', wed)
-			student.setAvailability('Thursday', thurs)
-			student.setAvailability('Friday', fri)
+			student.setAvailability(create_time_chart([mon, tues, wed, thurs, fri]))
 
 			# TODO figure out how to create student objects from request list - these need to be added to the students teammate list
 			studentList.append(student)
 
 	return studentList
+
+
+#helper function to process student availability into binary representation
+def create_time_chart(day_availability_list):
+	'''
+	input  - list of day's time slots, ex: ["10:00-12:00;2:00-4:00", "2:00-4:00;4:00-6:00", "10:00-12:00;4:00-6:00", "None", "10:00-12:00;2:00-4:00"]
+		the first item in the list is Monday, then Tuesday, etc... (the function zips this with in-order days so that the data is not scrambled)
+		within each 'day' is a semicolon separated list of available times slots
+	this function parses that availability into a binary representation
+	output - dictionary
+		key: days (Monday, Tuesday, etc.)
+		value: a list of 0's and 1's, which indicates which times slots are open for that student
+		ex: "Monday":[0, 1, 1, 0, 0] means that the student is available on Monday from 12:00-2:00& 2:00-4:00
+		the list should only be 5 spaces long, representing 4 time slots(10-12, 12-2, 2-4, 4-6) and None, meaning no time available
+	'''
+	days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+	pre_chart = dict(zip(days, day_availability_list))
+	chart = dict()
+	for day, daytimes in pre_chart.items():
+		times = daytimes.split(';')
+		new_li = [0 for i in range(5)]
+		for slot in times:
+			if slot == "10:00 - 12:00":
+				new_li[0]=1
+			elif slot == "12:00 - 2:00":
+				new_li[1]=1
+			elif slot == "2:00 - 4:00":
+				new_li[2]=1
+			elif slot == "4:00 - 6:00":
+				new_li[3]=1
+			else: #No available time
+				new_li[4]=1
+				new_li[0:4] = [0 for i in range(4)]
+		chart[day] = new_li
+	return chart
 
 
 def export():
@@ -81,5 +112,8 @@ def export():
 
 # ----------------------Sandbox Area--------------------------------------
 if __name__ == '__main__':
-	for guy in process('example_survey_answer.csv'):
+	for guy in process('422_Project1_Template.csv'):
 		print(guy)
+		print(guy.getAvailability())
+	b_chart = ["10:00-12:00;2:00-4:00", "2:00-4:00;4:00-6:00", "10:00-12:00;4:00-6:00", "None", "10:00-12:00;2:00-4:00"]
+	#print(create_time_chart(b_chart))
