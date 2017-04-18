@@ -19,6 +19,10 @@ ourclass.sortIntoTeams()
 """Amie's Notes to herself:
 
 TODO:
+Make sure that the population of the "teamList" also includes wiping it if it had anything in it beforehand...
+So that if we get to the point where we are re-doing sorts, we don't end up with multiples of the classsize.
+
+
 Need to increase random potential of swaps (including between members who are both on unviable teams).
 So this means allowing swapees to be the entire pool of students not just assigned_viable
 
