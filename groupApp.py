@@ -18,6 +18,7 @@ import fileProcess as fp
 # export to csv button
 
 # WISHLIST - in order
+# APPA
 # students per group slider
 # weight labels and sliders
 # "screen" to view results
