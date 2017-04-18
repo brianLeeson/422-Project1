@@ -3,6 +3,8 @@ Author(s): Brian Leeson + Jamie Zimmerman
 
 """
 
+from Team import Team
+
 
 class Classroom:
 
@@ -12,7 +14,7 @@ class Classroom:
 		
 		self.csv_file = ''  # the csv file containing all survey responses for this class
 		self.studentList = []  # list of Student objects
-		self.teamList = []  # list of Team objects
+		self.teamList = []  # this is assumed ot be the final sorted team list
 
 		# TODO Is this how we want our weights to look?
 		# We could break them out into individual attributes
@@ -70,21 +72,29 @@ class Classroom:
 		"""
 		function sorts self._studentList into groups of self._teamSize
 		based on an algorithm
-		then sets that sorted list to self._teamList
+		then sets that sorted list to self.teamList
 		returns None
 		"""
 		# initial algorithm sorts first three into a group, then next three, etc.
-		# TODO: Make algorithm better
+		# TODO: Make algorithm better.
+		# TODO: can scrap everything, so long as self.teamList is [teamObj, teamObj, teamObj...]
 
 		teamSize = self.getTeamSize()
 		stList = self.getStudentList()[:]  # make copy of student list
 		teamList = []
-
+		teamUID = 0
 		while len(stList) > 0:
+			t = Team(teamUID)
+			for student in stList[:teamSize+1]:
+				t.addMember(student)
+
 			# append first three members
-			teamList.append(stList[:teamSize+1])
+			teamList.append(t)
+
 			# create new list minus first three members
 			stList = stList[teamSize:]
+
+			teamUID += 1
 
 		self.setTeamList(teamList)
 
