@@ -116,4 +116,4 @@ if __name__ == '__main__':
 		print(guy)
 		print(guy.getAvailability())
 	b_chart = ["10:00-12:00;2:00-4:00", "2:00-4:00;4:00-6:00", "10:00-12:00;4:00-6:00", "None", "10:00-12:00;2:00-4:00"]
-	#print(create_time_chart(b_chart))
+	
