@@ -29,10 +29,10 @@ class Student:
 							'SQL': 0,
 							'Bash/Unix': 0}
 		self.availability = {'Monday': [],  # the value is a list of datetime objects (possibly)
-							'Tuesday': [],
-							'Wednesday': [],
-							'Thursday': [],
-							'Friday': []}
+					'Tuesday': [],
+					'Wednesday': [],
+					'Thursday': [],
+					'Friday': []}
 		self.teammates = []  # list of student Objects - recursive relation
 
 	def __str__(self):
@@ -78,17 +78,9 @@ class Student:
 		'''
 		return self.availability
 
-	def setAvailability(self, day, time):
-		'''
-		input:
-			self -> class
-			day -> string of day
-			time -> datetime object OR string of datetime
-		function keys into students availiability schedule and adds that block of time to the right day
-		'''
-		self.availability[day].append(time)
+	def setAvailability(self, graph):
+		self.availability = graph
 		return None
-
 	def setTeammates(self, buddy):
 		self.teammates.append(buddy)
 		return None
