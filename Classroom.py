@@ -7,12 +7,12 @@ Author(s): Brian Leeson + Jamie Zimmerman
 class Classroom:
 
 	def __init__(self, section, teacher):
-		self.section = section #'W17', 'S17', etc.
-		self.teacher = teacher #'Michal Young', etc.
+		self.section = section  # 'W17', 'S17', etc.
+		self.teacher = teacher  # 'Michal Young', etc.
 		
-		self.csv_file = '' #the csv file containing all survey responses for this class
-		self.studentList = [] #list of Student objects
-		self.teamList = [] #list of Team objects
+		self.csv_file = ''  # the csv file containing all survey responses for this class
+		self.studentList = []  # list of Student objects
+		self.teamList = []  # list of Team objects
 
 		# TODO Is this how we want our weights to look?
 		# We could break them out into individual attributes
@@ -21,22 +21,28 @@ class Classroom:
 				
 	def getSection(self):
 		return self.section
+
 	def setSection(self, section):
 		self.section = section
 		return None
+
 	def getTeacher(self):
 		return self.teacher
+
 	def setTeacher(self, teacher):
 		self.teacher = teacher
 		return None
+
 	def getCSV(self):
 		return self.csv_file
+
 	def setCSV(self, csv_file):
 		self.csv_file = csv_file
 		return None
 
 	def getStudentList(self):
 		return self.studentList
+
 	def setStudentList(self, studentList):
 		self.studentList = studentList
 		return None
@@ -46,12 +52,14 @@ class Classroom:
 
 	def getTeamList(self):
 		return self.teamList
+
 	def setTeamList(self, teamList):
 		self.teamList = teamList
 		return None
 
 	def getTeamSize(self):
 		return self.teamSize
+
 	def setTeamSize(self, teamSize):
 		self.teamSize = teamSize
 		return None
@@ -80,7 +88,7 @@ class Classroom:
 
 		return None
 
-#-------------------------------------------- Sandbox Area --------------------------------------#
+# -------------------------------------------- Sandbox Area --------------------------------------#
 if __name__ == '__main__':
 	cs = Classroom('S17', 'Michal Young')
 	students = [1, 2, 3, 'a', '4']
