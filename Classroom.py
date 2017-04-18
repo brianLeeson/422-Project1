@@ -102,6 +102,8 @@ class Classroom:
 		self.sortStudentList()
 		self.getSeedTeams()
 		self.attemptToPlace()
+		for team in self.assignedTeams_viable:
+			self.teamList.append(team)
 
 
 		# Print report to check results
@@ -194,6 +196,7 @@ class Classroom:
 				print(team.quality_score, end=', ')
 
 			print()
+
 		return None
 
 	def getSeedTeams(self):
