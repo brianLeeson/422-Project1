@@ -5,6 +5,7 @@ Author(s): Jamie Zimmerman + Amie Corso
 
 from Student import Student #from the module, import the class
 
+
 class Team:
 
 	def __init__(self, identifier):
@@ -85,24 +86,27 @@ class Team:
 
 	def getNumber(self):
 		return self.number
+
 	def setNumber(self, num):
 		self.number = num
 		return None
 	
 	def getMemberList(self):
 		return self.member_list
+
 	def setMemberList(self, grouping):
 		self.member_list = grouping
 		return None
 
 	def addMember(self, teammate):
-		if len(self.member_list) == 3: #TODO don't hard code 3, compare to group size 
-			return False #TODO error checking - how does user become informed if it has tried to add too many people
+		if len(self.member_list) == 3: # TODO don't hard code 3, compare to group size
+			return False # TODO error checking - how does user become informed if it has tried to add too many people
 		self.member_list.append(teammate)
 		return None
 	
 	def getTeamName(self):
 		return self.team_name
+
 	def setTeamName(self, team_name):
 		self.team_name = team_name
 		return None
@@ -129,7 +133,7 @@ class Team:
 	def __ne__(self, other):
 		return self.number != other.number
 
-#-------------------------------------------- Sandbox Area --------------------------------------#
+# -------------------------------------------- Sandbox Area --------------------------------------#
 if __name__ == '__main__':
 	team = Team(6)
 	student1 = Student('brian', 'brian@brian.com')
@@ -141,4 +145,4 @@ if __name__ == '__main__':
 	team.addMember(student1)
 	for guy in team.getMemberList():
 		print(guy)
-	
+

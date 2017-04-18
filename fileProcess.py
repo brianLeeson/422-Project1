@@ -42,7 +42,7 @@ def process(fileName):
 			requests = row["Desired Teammates DuckIDs (separated by ';')"]
 
 			student = Student(row['Student Name'], row['Your DuckID'])
-			for i in range(7): #TODO more elegant design
+			for i in range(7):  # TODO more elegant design
 				student.setCodeExperience(languages[i], int(row[survey_headers[i]]))
 
 			student.setAvailability(create_time_chart([mon, tues, wed, thurs, fri]))
@@ -55,7 +55,7 @@ def process(fileName):
 
 #helper function to process student availability into binary representation
 def create_time_chart(day_availability_list):
-	'''
+	"""
 	input  - list of day's time slots, ex: ["10:00-12:00;2:00-4:00", "2:00-4:00;4:00-6:00", "10:00-12:00;4:00-6:00", "None", "10:00-12:00;2:00-4:00"]
 		the first item in the list is Monday, then Tuesday, etc... (the function zips this with in-order days so that the data is not scrambled)
 		within each 'day' is a semicolon separated list of available times slots
@@ -66,7 +66,7 @@ def create_time_chart(day_availability_list):
 		ex: "Monday":[0, 1, 1, 0, 0] means that the student is available on Monday from 12:00-2:00& 2:00-4:00
 		the list should only be 5 spaces long, representing 4 time slots(10-12, 12-2, 2-4, 4-6) and None, meaning no time available
 		example usage: student.setAvailability(create_time_chart(day_availability_list))
-	'''
+	"""
 	days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 	pre_chart = dict(zip(days, day_availability_list))
 	chart = dict()
@@ -82,7 +82,7 @@ def create_time_chart(day_availability_list):
 				new_li[2]=1
 			elif slot == "4:00 - 6:00":
 				new_li[3]=1
-			else: #No available time
+			else:  # No available time
 				new_li[4]=1
 				new_li[0:] = [0 for i in range(4)]
 		chart[day] = new_li
@@ -102,16 +102,16 @@ def export(decided_teams):
 		writer.writeheader()
 		i = 1
 		for team in decided_teams:
-			#TODO print team's UID, not just a random number
+			# TODO print team's UID, not just a random number
 			teammates = team.getMemberList()
-			writer.writerow({'Team Number':i, 'Student 1':teammates[0], 'Student 2':teammates[1], 'Student 3':teammates[2]})
+			writer.writerow({'Team Number': i, 'Student 1': teammates[0], 'Student 2': teammates[1], 'Student 3': teammates[2]})
 			i += 1
 	
 	return None
 
 # ----------------------Sandbox Area--------------------------------------
 if __name__ == '__main__':
-	#THIS CODE NEVER NEEDS TO BE SAVED, JUST A WORKSPACE AREA
+	# THIS CODE NEVER NEEDS TO BE SAVED, JUST A WORKSPACE AREA
 	for guy in process('422_Project1_Template.csv'):
 		print(guy)
 		print(guy.getAvailability())
