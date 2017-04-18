@@ -65,9 +65,18 @@ class Student:
 		return None
 
 	def getCodeExperience(self):
+		'''
+		output -> dictionary mapping languages to integer rating of skill
+		ex: dict = {'Python': 5 ... and so on}
+		'''
 		return self.codeExperience
 
 	def setCodeExperience(self, tool, capability):
+		'''
+		input -> tool - string of a coding lanugage i.e.: 'Python'
+			capability - string OR int that is integer rating of skill
+		this function sets the student's particular language skill to a rating, casting the rating to an int as a safety measure
+		'''
 		self.codeExperience[tool] = capability
 		return None
 
@@ -79,6 +88,10 @@ class Student:
 		return self.availability
 
 	def setAvailability(self, graph):
+		'''
+		input -> graph is an entire dictionary representing the student's entire weeklong availability
+			#TODO build helper function that takes extra parameter of specific day and time slot, and adds that to a student's availability
+		'''
 		self.availability = graph
 		return None
 	def setTeammates(self, buddy):
