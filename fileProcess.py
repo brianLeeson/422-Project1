@@ -103,17 +103,33 @@ def create_time_chart(day_availability_list):
 	return chart
 
 
-def export():
+def export(decided_teams):
 	"""
-	function exports teams as a csv to the cwd
+	THIS FUNCTION ASSUMES THAT THE INPUT IS A LIST OF TEAM OBJECTS***
+	function writes teams as a csv to cwd
 	"""
-
+	with open('team_decisions.csv', 'w') as csvfile:
+		fieldnames = ['Team Number', 'Student 1', 'Student 2', 'Student 3']
+		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+		writer.writeheader()
+		i = 1
+		for team in decided_teams:
+			#TODO print team's UID, not just a random number
+			teammates = team.getMemberList()
+			writer.writerow({'Team Number':i, 'Student 1':teammates[0], 'Student 2':teammates[1], 'Student 3':teammates[2]})
+			i += 1
+	
 	return None
 
 # ----------------------Sandbox Area--------------------------------------
 if __name__ == '__main__':
-	for guy in process('422_Project1_Template.csv'):
+	'''for guy in process('422_Project1_Template.csv'):
 		print(guy)
 		print(guy.getAvailability())
 	b_chart = ["10:00-12:00;2:00-4:00", "2:00-4:00;4:00-6:00", "10:00-12:00;4:00-6:00", "None", "10:00-12:00;2:00-4:00"]
+<<<<<<< HEAD
+=======
+	'''
+	decided = process('422_Project1_Template.csv')
+>>>>>>> a2a41240b4f932ed90ee8f2a6e483b2d66344fce
 	
