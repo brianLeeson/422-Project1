@@ -15,9 +15,8 @@ class Student:
 	# from Amie:  only note on this is that the potential_teams attritube needs to be mutable (list)
 
 	def __init__(self, name, email):
-		self.UID = 0  # TODO implement UID as a UUID? *Can't* be student ID. FERPA
 		self.name = name
-		self.email = email
+		self.duckID = duckID #Use this attribute as a unique identifier
 
 		self.overallExperience = 0  # overall experience score - how many upper div CS classes completed
 		self.codeExperience = {'Python': 0,
@@ -77,11 +76,11 @@ class Student:
 		self.name = name
 		return None
 
-	def getUID(self):
-		return self.UID
+	def getduckID(self):
+		return self.duckID
 
-	def setUID(self, UID):
-		self.UID = UID
+	def setduckID(self, duckID):
+		self.duckID = duckID
 		return None
 
 	def getOverallExperience(self):
