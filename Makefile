@@ -1,4 +1,4 @@
-# Author(s) Brian
+# Author(s): Brian
 
 SOURCES = groupApp.py
 
