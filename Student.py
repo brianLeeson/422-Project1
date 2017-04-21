@@ -17,15 +17,7 @@ class Student:
 		self.duckID = duckID #Use this attribute as a unique identifier
 
 		self.overallExperience = 0  # overall experience score - how many upper div CS classes completed
-		self.codeExperience = {'Python': 0,
-							'Java': 0,
-							'JavaScript': 0,
-							'C': 0,
-							'C++': 0,
-							'PHP': 0,
-							'HTML': 0,
-							'SQL': 0,
-							'Bash/Unix': 0}
+		self.codeExperience = {'Python': 0, 'Java': 0, 'Javascript': 0, 'C': 0, 'C++': 0, 'PHP': 0, 'HTML': 0, 'SQL': 0, 'Bash/Unix': 0}
 		self.availability = {'Monday': [], #values are list of 0s and 1s representing true availability for time slots 
 					'Tuesday': [],
 					'Wednesday': [],
