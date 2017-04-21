@@ -102,7 +102,7 @@ class Classroom:
 			print(student.getName(), end=", ")
 		print("\n")
 
-		self.allViableTeams = self.generateAllTeams()  # TODO: bug after import, sort, sort
+		self.generateAllTeams()  # TODO: bug after import, sort, sort
 		self.sortStudentList()
 		self.getSeedTeams()
 		self.attemptToPlace()
