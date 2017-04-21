@@ -5,6 +5,10 @@ SOURCES = groupApp.py
 run:  $(SOURCES)
 	python3 groupApp.py &
 
+#
+# locUp and mastUp will NOT commit for you. make sure you commit your branch changes.
+# if either fails, check your commits
+
 locUp:
 	git checkout ${BRANCH}
 	git pull origin ${BRANCH}
