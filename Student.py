@@ -2,8 +2,6 @@
 Author(s): Brian Leeson + Jamie Zimmerman + Amie Corso
 
 """
-import datetime
-
 
 class Student:
 	""" 
@@ -14,7 +12,7 @@ class Student:
 	# There might be some aliasing issues we could nip in the bud if we chose tuples
 	# from Amie:  only note on this is that the potential_teams attritube needs to be mutable (list)
 
-	def __init__(self, name, email):
+	def __init__(self, name, duckID):
 		self.name = name
 		self.duckID = duckID #Use this attribute as a unique identifier
 
@@ -28,12 +26,12 @@ class Student:
 							'HTML': 0,
 							'SQL': 0,
 							'Bash/Unix': 0}
-		self.availability = {'Monday': [],  # the value is a list of datetime objects (possibly)
+		self.availability = {'Monday': [], #values are list of 0s and 1s representing true availability for time slots 
 					'Tuesday': [],
 					'Wednesday': [],
 					'Thursday': [],
 					'Friday': []}
-		self.teammates = []  # list of student Objects - recursive relation
+		self.teammates = []  # list of strings - duckIDs of desired teammates
 		self.potential_teams = [] # used during sorting process to keep track of which teams on which a student COULD appear
 		self.assignedTeam = None  # keeps track during sorting process of which team a student is associated with
 								  # final once the sorting process is complete
@@ -121,14 +119,20 @@ class Student:
 		self.availability = graph
 		return None
 
-	def setTeammates(self, buddy):
+
+	def setTeammate(self, buddies):
+		'''
+		input: buddies is a list of strings, the duck ID's of desired teammates
+		'''
+		self.teammates = buddies;
+		return None
+
+	def addTeammate(self, buddy):
 		self.teammates.append(buddy)
 		return None
 
 	def getTeammates(self):
 		return self.teammates
-
-	# TODO figure out how criteria is represented
 
 
 # -----------------------------------Sandbox Area -------------------------------------------------#
