@@ -8,17 +8,6 @@ from Team import Team
 import csv
 
 
-def timestamp(meeting_time):
-	"""
-	input -> string, representation of a datetime meeting time
-	output -> datetime object
-	"""
-
-	# TODO determine if we need this function at all
-
-	return
-
-
 def process(fileName):
 	"""
 	input -> string of a csv file, ex: '422_Project_Template.csv'
@@ -39,13 +28,14 @@ def process(fileName):
 			thurs = row['Thursday']
 			fri = row['Friday']
 			
-			requests = row["Desired Teammates DuckIDs (separated by ';')"]
+			requests = row["Desired Teammates DuckIDs (separated by ';')"].split(';')
 
 			student = Student(row['Student Name'], row['Your DuckID'])
 			for i in range(7):  # TODO more elegant design
 				student.setCodeExperience(languages[i], int(row[survey_headers[i]]))
 
 			student.setAvailability(create_time_chart([mon, tues, wed, thurs, fri]))
+			student.setTeammates(requests)
 
 			# TODO figure out how to create student objects from request list - these need to be added to the students teammate list
 			studentList.append(student)
@@ -83,7 +73,6 @@ def create_time_chart(day_availability_list):
 			elif slot == "4:00 - 6:00":
 				new_li[3]=1
 			else:  # No available time
-				new_li[4]=1
 				new_li[0:] = [0 for i in range(4)]
 		chart[day] = new_li
 	return chart
