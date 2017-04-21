@@ -7,12 +7,13 @@ import Student
 import fileProcess
 import random
 
+
 class Classroom:
 
 	def __init__(self, section, teacher):
 		self.section = section  # 'W17', 'S17', etc.
 		self.teacher = teacher  # 'Michal Young', etc.
-		
+
 		self.csv_file = ''  # the csv file containing all survey responses for this class
 		self.studentList = []  # list of Student objects
 		self.teamList = []  # list OFFICIAL list of Team objects (populated by sortIntoTeams())
@@ -29,11 +30,14 @@ class Classroom:
 
 		# TODO Is this how we want our weights to look?
 		# We could break them out into individual attributes
-		self.weights = [] # currently unused
+		self.weights = []  # currently unused
 		self.teamSize = 3
 
 		self.sortingSuccess = False
-				
+
+	def __str__(self):
+		return self.teacher + str(self.section)
+
 	def getSection(self):
 		return self.section
 
@@ -98,13 +102,12 @@ class Classroom:
 			print(student.getName(), end=", ")
 		print("\n")
 
-		self.allViableTeams = self.generateAllTeams()
+		self.allViableTeams = self.generateAllTeams()  # TODO: bug after import, sort, sort
 		self.sortStudentList()
 		self.getSeedTeams()
 		self.attemptToPlace()
 		for team in self.assignedTeams_viable:
 			self.teamList.append(team)
-
 
 		# Print report to check results
 		print("\n\nAfter running sortIntoTeams() : \n")
@@ -128,8 +131,8 @@ class Classroom:
 
 		print("\nReport of viable teams: ")
 		for team in self.assignedTeams_viable:
-			print("Team ", team.number, "Quality score: ", team.quality_score, ": com_lang =", team.common_langs, " time_overlap =",
-				  team.time_overlap, " viability =", team.is_viable)
+			print("Team ", team.number, "Quality score: ", team.quality_score, ": com_lang =", team.common_langs,
+				" time_overlap =", team.time_overlap, " viability =", team.is_viable)
 			for member in team.member_list:
 				print(member.name, end=' ')
 			print()

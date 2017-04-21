@@ -24,7 +24,7 @@ import fileProcess as fp
 # "screen" to view results
 
 # Classroom instance stores data
-classroom = Classroom.Classroom(12345, "Your boi")  # Global variable instance, might need to overwrite in importCB
+classroom = Classroom.Classroom("12345", "Your boi")  # Global variable instance, might need to overwrite in importCB
 
 
 # DEFINE FUNCTIONS
@@ -34,9 +34,14 @@ def importCB():
 		function prompts user to select path to csv and
 		process csv
 		"""
+		# Get Field Values
+		name = nameEntry.get()
+		crn = crnEntry.get()
+		size = int(numStudentSpin.get())
 
 		# create new Classroom instance. overwrites global on purpose
-		# classroom = Classroom.Classroom(12345, "Teacher Name")
+		global classroom
+		classroom = Classroom.Classroom(crn, name)
 
 		# prompt user for path
 		path = filedialog.askopenfilename()
@@ -57,8 +62,10 @@ def sortCB():
 		"""
 		Function calls sort on classroom class.
 		"""
+		global classroom
 
-		# TODO: set group size here
+		# TODO: set teamsize when size of !3 is allowed
+		# classroom.setTeamSize(size)
 
 		classroom.sortIntoTeams()
 
