@@ -109,11 +109,10 @@ if __name__ == '__main__':
 		print(guy.getAvailability())
 		print(guy.getCodeExperience())
 		print(guy.getTeammates())
-	b_chart = ["10:00-12:00;2:00-4:00", "2:00-4:00;4:00-6:00", "10:00-12:00;4:00-6:00", "None", "10:00-12:00;2:00-4:00"]
-	
-	'''
-	decided = process('422_Project1_Template.csv')
-	team = Team(4)
-	team.setMemberList(decided)
-	export([team])
-	'''
+	team1 = Team(1)
+	team1.setMemberList(stu_li[0:3])
+	team2 = Team(2)
+	team2.setMemberList(stu_li[3:6])
+	team3 = Team(3)
+	team3.setMemberList(stu_li[6:9])
+	export([team1, team2, team3])
