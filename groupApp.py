@@ -34,13 +34,13 @@ def importCB():
 		function prompts user to select path to csv and
 		process csv
 		"""
+		global classroom
+
 		# Get Field Values
 		name = nameEntry.get()
 		crn = crnEntry.get()
-		size = int(numStudentSpin.get())
 
-		# create new Classroom instance. overwrites global on purpose
-		global classroom
+		# create new Classroom instance. overwrites global
 		classroom = Classroom.Classroom(crn, name)
 
 		# prompt user for path
@@ -64,6 +64,7 @@ def sortCB():
 		"""
 		global classroom
 
+		size = int(numStudentSpin.get())
 		# TODO: set teamsize when size of !3 is allowed
 		# classroom.setTeamSize(size)
 

@@ -8,17 +8,6 @@ from Team import Team
 import csv
 
 
-def timestamp(meeting_time):
-	"""
-	input -> string, representation of a datetime meeting time
-	output -> datetime object
-	"""
-
-	# TODO determine if we need this function at all
-
-	return
-
-
 def process(fileName):
 	"""
 	input -> string of a csv file, ex: '422_Project_Template.csv'
@@ -33,19 +22,22 @@ def process(fileName):
 		survey_headers = ['Python experience', 'Java experience', 'Javascript experience', 'C experience', 'C++ experience', 'PHP experience', 'HTML experience', 'SQL experience', 'Bash/Unix experience']
 		
 		for row in reader:
+			#parse time availability data
 			mon = row['Monday']
 			tues = row['Tuesday']
 			wed = row['Wednesday']
 			thurs = row['Thursday']
 			fri = row['Friday']
-			
-			requests = row["Desired Teammates DuckIDs (separated by ';')"]
-
+			#get student's requested groupmates
+			requests = row["Desired Teammates DuckIDs (separated by ';')"].split(';')
+			#create a student object
 			student = Student(row['Student Name'], row['Your DuckID'])
-			for i in range(7):  # TODO more elegant design
+			for i in range(9):  # TODO more elegant design
 				student.setCodeExperience(languages[i], int(row[survey_headers[i]]))
+				#print('{} for tool {} has skill {}'.format(student.getName(), languages[i], row[survey_headers[i]]))
 
 			student.setAvailability(create_time_chart([mon, tues, wed, thurs, fri]))
+			student.setTeammates(requests)
 
 			# TODO figure out how to create student objects from request list - these need to be added to the students teammate list
 			studentList.append(student)
@@ -83,8 +75,7 @@ def create_time_chart(day_availability_list):
 			elif slot == "4:00 - 6:00":
 				new_li[3]=1
 			else:  # No available time
-				new_li[4]=1
-				new_li[0:] = [0 for i in range(4)]
+				new_li[0:] = [0 for i in range(5)]
 		chart[day] = new_li
 	return chart
 
@@ -112,13 +103,16 @@ def export(decided_teams):
 # ----------------------Sandbox Area--------------------------------------
 if __name__ == '__main__':
 	# THIS CODE NEVER NEEDS TO BE SAVED, JUST A WORKSPACE AREA
-	for guy in process('422_Project1_Template.csv'):
+	stu_li = process('fake_422_data.csv')
+	for guy in stu_li:
 		print(guy)
 		print(guy.getAvailability())
 		print(guy.getCodeExperience())
-	b_chart = ["10:00-12:00;2:00-4:00", "2:00-4:00;4:00-6:00", "10:00-12:00;4:00-6:00", "None", "10:00-12:00;2:00-4:00"]
-	
-	decided = process('422_Project1_Template.csv')
-	team = Team(4)
-	team.setMemberList(decided)
-	export([team])
+		print(guy.getTeammates())
+	team1 = Team(1)
+	team1.setMemberList(stu_li[0:3])
+	team2 = Team(2)
+	team2.setMemberList(stu_li[3:6])
+	team3 = Team(3)
+	team3.setMemberList(stu_li[6:9])
+	export([team1, team2, team3])
