@@ -1,3 +1,5 @@
+# Author Brian
+
 SOURCES = groupApp.py
 
 run:  $(SOURCES)
