@@ -36,7 +36,7 @@ class Classroom:
 		self.sortingSuccess = False
 
 	def __str__(self):
-		return self.teacher + str(self.section)
+		return self.teacher + " " + str(self.section)
 
 	def getSection(self):
 		return self.section

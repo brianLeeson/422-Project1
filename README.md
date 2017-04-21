@@ -1,9 +1,9 @@
 # 422-Project1
 This is the first group project for CIS 422 Software Methodologies course.
-In order of branching, the project authors are:
+The project authors are:
 1. Brian Leeson
 2. Jamie Zimmerman
-3. 
+3. Amie Corso
 
 Description:
 This project attempts to solve the problem of sorting student into groups for the 422 course
@@ -13,6 +13,7 @@ based on survey data.
 
 Dependencies:
 python 3.*
+bash shell
 
 Instructions:  
 To run the application:  
