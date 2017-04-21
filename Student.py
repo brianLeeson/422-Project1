@@ -120,7 +120,7 @@ class Student:
 		return None
 
 
-	def setTeammate(self, buddies):
+	def setTeammates(self, buddies):
 		'''
 		input: buddies is a list of strings, the duck ID's of desired teammates
 		'''
