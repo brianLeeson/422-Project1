@@ -24,7 +24,7 @@ import fileProcess as fp
 # "screen" to view results
 
 # Classroom instance stores data
-classroom = Classroom.Classroom(12345, "Your boi")
+classroom = Classroom.Classroom("12345", "Your boi")  # Global variable instance, might need to overwrite in importCB
 
 
 # DEFINE FUNCTIONS
@@ -34,6 +34,15 @@ def importCB():
 		function prompts user to select path to csv and
 		process csv
 		"""
+		# Get Field Values
+		name = nameEntry.get()
+		crn = crnEntry.get()
+		size = int(numStudentSpin.get())
+
+		# create new Classroom instance. overwrites global on purpose
+		global classroom
+		classroom = Classroom.Classroom(crn, name)
+
 		# prompt user for path
 		path = filedialog.askopenfilename()
 
@@ -53,6 +62,11 @@ def sortCB():
 		"""
 		Function calls sort on classroom class.
 		"""
+		global classroom
+
+		# TODO: set teamsize when size of !3 is allowed
+		# classroom.setTeamSize(size)
+
 		classroom.sortIntoTeams()
 
 		print("sorted")
@@ -75,20 +89,67 @@ def exportCB():
 # create app
 app = tk.Tk()
 
-mainFrame = tk.Frame(app)
+mainFrame = tk.Frame(app, bd=1, relief=tk.SUNKEN)
 mainFrame.grid(row=0, column=0)
 
-importButton = tk.Button(mainFrame, text="import", command=importCB)
+# --- Frame 0
+nameFrame = tk.Frame(mainFrame, bd=1)  # TODO: types of relief?
+nameFrame.grid(row=0, column=0, columnspan=3)
+
+nameLabel = tk.Label(nameFrame, text="Name:")
+nameLabel.grid(row=0, column=0)
+
+nameEntry = tk.Entry(nameFrame)
+nameEntry.grid(row=0, column=1)
+
+# --- Frame 1
+crnFrame = tk.Frame(mainFrame, bd=1)
+crnFrame.grid(row=1, column=0, columnspan=3)
+
+crnLabel = tk.Label(crnFrame, text="CRN:")
+crnLabel.grid(row=0, column=0)
+
+crnEntry = tk.Entry(crnFrame)
+crnEntry.grid(row=0, column=1)
+
+# --- Frame 2
+numStudentFrame = tk.Frame(mainFrame, bd=1)
+numStudentFrame.grid(row=2, column=0, columnspan=3)
+
+numStudentLabel = tk.Label(numStudentFrame, text="Group Size:")
+numStudentLabel.grid(row=0, column=0)
+
+numStudentSpin = tk.Spinbox(numStudentFrame, from_=1, to=5)
+numStudentSpin.grid(row=0, column=1)
+
+# --- Frame 3
+description = tk.Frame(mainFrame, bd=1)
+description.grid(row=3, column=0, columnspan=3)
+
+descriptionLabel = tk.Label(description, text="DESCRIPTION HERE")
+descriptionLabel.grid(row=0, column=0)
+
+# --- Frame 4
+processFrame = tk.Frame(mainFrame, bd=1, relief=tk.SUNKEN)
+processFrame.grid(row=4, column=0, columnspan=3)
+
+importButton = tk.Button(processFrame, text="import", command=importCB)
 importButton.grid(row=0, column=0)
 
-sortButton = tk.Button(mainFrame, text="sort", command=sortCB)
-sortButton.grid(row=1, column=0)
+sortButton = tk.Button(processFrame, text="sort", command=sortCB)
+sortButton.grid(row=0, column=1)
 
-exportButton = tk.Button(mainFrame, text="export", command=exportCB)
-exportButton.grid(row=2, column=0)
+exportButton = tk.Button(processFrame, text="export", command=exportCB)
+exportButton.grid(row=0, column=2)
 
-canvas = tk.Canvas(app, width=500, height=500, borderwidth=10, bg="white")
+
+# --- Canvas
+canvasFrame = tk.Frame(mainFrame, bd=1)
+canvasFrame.grid(row=0, column=3, rowspan=5)
+
+canvas = tk.Canvas(canvasFrame, width=500, height=500, borderwidth=10, bg="white")
 canvas.grid(row=0, column=1)
+
 
 # runs the app
 app.mainloop()
