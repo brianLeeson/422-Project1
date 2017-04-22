@@ -19,22 +19,27 @@ ourclass.sortIntoTeams()
 """Amie's Notes to herself:
 
 TODO:
-Make sure that the population of the "teamList" also includes wiping it if it had anything in it beforehand...
-So that if we get to the point where we are re-doing sorts, we don't end up with multiples of the classsize.
-
 
 Need to increase random potential of swaps (including between members who are both on unviable teams).
 So this means allowing swapees to be the entire pool of students not just assigned_viable
 
 Add the logic to deal with unassigned students (groups not divisible by 3)
+- what do we do if the class size is less than the teamsize?
+- or if no viable teams can be created?  (maybe just report a message and abort the sort?)
 
-Handling the case of a student(s) who don't appear on ANY teams...
+- create some very small test cases, and intentionally unviable test cases
+
+
+
+Handling the case of a student(s) who don't appear on ANY teams... Or is this already taken care of?
 
 That weird bug where we lost a team......
 
 fix direct attribute reference with usage of getters and setters
+OR IS RALEIGH RIGHT AND THIS IS STUPID?
 
 make sure student.teammates list gets populated once sort is over
+OR DO WE EVEN NEED THIS?
 
 TEST cases
 
@@ -46,6 +51,12 @@ Algorithm Wishlist:
 Clean up printing for better discussion?
 
 
+FOR MY COMRADES:
+- should export wipe the original CSV file?  Because right now it's appending to it
+- should multiple exports generate a new file?
+- what other data can we report in the CSV?
+- seems that the export isn't including 4th members
+- what's going on with that error message printing around the language dictionaries?
 
 IDEAS:
 if we fail to accommodate every student, we repeat the process starting with a different FIRST team assignment?
@@ -60,6 +71,4 @@ Student Class:
 
 How do I get the __str__ override to print a prettier version? (for the Team class, for example)
 """
-
-
 
