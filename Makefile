@@ -8,11 +8,11 @@ env:
 	(source ./env/bin/activate; pip install -r requirements.txt) || true
 
 
-dist:
-	pip freeze >requirements.txt
+freeze:
+	(pip freeze | grep -v "pkg-resources" > requirements.txt) || true
 
 run: env
-	. env/bin/activate; python3 groupApp.py
+	. env/bin/activate; python3 groupApp.py > log.txt
 
 clean:
 	rm -rf __pycache__
