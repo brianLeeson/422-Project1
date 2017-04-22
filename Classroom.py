@@ -96,16 +96,6 @@ class Classroom:
 
 		"""
 
-		# We first want to wipe the attributes of our Classroom instance, in case we have previously called sortIntoTeams()
-		# Fixed bug of teams/students accumulating in these lists with multiple sorts.
-		self.teamList = []
-		self.assignedStudents_viable = []
-		self.assignedStudents_bad = []
-		self.unassignedStudents = []
-		self.allViableTeams = []
-		self.assignedTeams_viable = []
-		self.assignedTeams_bad = []
-
 		print("Student list is: ")
 		for student in self.studentList:
 			print(student.getName(), end=", ")
