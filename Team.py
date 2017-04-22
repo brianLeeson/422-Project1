@@ -46,10 +46,11 @@ class Team:
 		Populates member list of common languages (self.common_langs).
 		Sets member variable num_common_langs."""
 		self.common_langs = []  # RESET the language list in case we are updating an pre-calculated team
-		languagelist = ['Python', 'Java', 'JavaScript', 'C', 'C++', 'PHP', 'HTML', 'SQL', 'Bash/Unix']
+		languagelist = ['Python', 'Java', 'Javascript', 'C', 'C++', 'PHP', 'HTML', 'SQL', 'Bash/Unix']
 		for language in languagelist:
 			speakers = 0
 			for student in self.member_list:
+				print("error at ", student.getCodeExperience())
 				if student.getCodeExperience()[language] >= 3:
 					speakers += 1
 			if speakers == 3:
