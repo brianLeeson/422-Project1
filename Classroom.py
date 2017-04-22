@@ -3,8 +3,6 @@ Author(s): Brian Leeson + Jamie Zimmerman + Amie Corso
 
 """
 import Team
-import Student
-import fileProcess
 import random
 
 
