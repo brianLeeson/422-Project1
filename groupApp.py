@@ -13,35 +13,24 @@ import fileProcess as fp
 # weight labels and sliders
 
 # Classroom instance stores data
-classroom = Classroom.Classroom("0", "")  # Global variable instance
+CLASSROOM = Classroom.Classroom("0", "")  # Global variable instance
+PATH = ""  # path to import csv
 
 
 # DEFINE FUNCTIONS
 def importCB():
 		"""
 		called when import button clicked
-		function prompts user to select path to csv and
-		process csv
+		function prompts user to select path to csv 
+		and processes csv
 		"""
-		global classroom
-
-		# Get Field Values
-		name = nameEntry.get()
-		crn = crnEntry.get()
-
-		# create new Classroom instance. overwrites global
-		classroom = Classroom.Classroom(crn, name)
+		global PATH
 
 		# prompt user for path
-		path = filedialog.askopenfilename()
+		PATH = filedialog.askopenfilename()
 
 		# files process
-		if len(path):  # if they picked something
-			studentCollection = fp.process(path)
-
-			# assign to classroom class
-			classroom.setStudentList(studentCollection)
-
+		if len(PATH):  # if they picked something
 			print("imported")
 
 		return None
@@ -51,13 +40,27 @@ def sortCB():
 		"""
 		Function calls sort on classroom class.
 		"""
-		global classroom
+		global CLASSROOM
+		global PATH
 
+		# Get Field Values
 		size = int(numStudentSpin.get())
+		name = nameEntry.get()
+		crn = crnEntry.get()
 		# TODO: set teamsize when size of !3 is allowed
 		# classroom.setTeamSize(size)
 
-		classroom.sortIntoTeams()
+		# create new Classroom instance. overwrites global
+		CLASSROOM = Classroom.Classroom(crn, name)
+
+		# files process
+		if len(PATH):  # if they picked something
+			studentCollection = fp.process(PATH)
+
+			# assign to classroom class
+			CLASSROOM.setStudentList(studentCollection)
+
+		CLASSROOM.sortIntoTeams()
 		print("sorted")
 
 		display()
@@ -69,13 +72,13 @@ def display():
 	"""
 	this function displays the currently sorted teams on the canvas
 	"""
-	global classroom
+	global CLASSROOM
 
 	# --- Make and display team string
 	tCount = 0
 	row = 0
 	col = 0
-	for team in classroom.teamList:
+	for team in CLASSROOM.teamList:
 		teamText = "TeamID: " + str(team.getNumber()) + "\n"
 		for student in team.getMemberList():
 			teamText += student.getName() + "\n"
@@ -96,7 +99,7 @@ def exportCB():
 		Function exports csv of sort teams to cwd
 		"""
 		# TODO: Need function in file process to call
-		fp.export(classroom.getTeamList())
+		fp.export(CLASSROOM.getTeamList())
 
 		print("exported")
 
