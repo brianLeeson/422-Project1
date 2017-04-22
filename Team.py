@@ -15,7 +15,8 @@ class Team:
 
 		self.num_common_langs = 0
 		self.common_langs = []
-		self.time_overlap = 0
+		self.time_overlap = 0 #number of student's overlapping time slots
+		self.mutual_time_slots = [] #list of strings of Team's meeting times, i.e. ["Monday 12:00 - 2:00", "Thursday 4:00 - 6:00"]
 
 		self.quality_score = 0
 		self.is_viable = False
@@ -130,6 +131,15 @@ class Team:
 	def setTeamName(self, team_name):
 		self.team_name = team_name
 		return None
+	
+	def add_time_slot(daytime_slot):
+		'''
+		input -> string of a day and time, representing when the team will meet, i.e. "Monday 12:00 - 2:00"
+		function adds that string to the team's weekly meetups
+		'''
+		self.mutual_time_slots.append(daytime_slot)
+		return None
+
 
 # -------------------------------------------- Sandbox Area --------------------------------------#
 if __name__ == '__main__':
