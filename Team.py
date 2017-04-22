@@ -50,7 +50,6 @@ class Team:
 		for language in languagelist:
 			speakers = 0
 			for student in self.member_list:
-				print("error at ", student.getCodeExperience())
 				if student.getCodeExperience()[language] >= 3:
 					speakers += 1
 			if speakers == 3:

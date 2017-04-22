@@ -299,10 +299,7 @@ class Classroom:
 
 	def attemptToPlace(self):
 		"""
-		now we try to assign the students who are on bad teams to good ones by doing swaps
-
-		we can go team-by-team and try to swap the badstudent into each team in order
-
+		This function tries to assign students who are on unviable teams to viable ones via randomized hill-climbing approach.
 		"""
 		# choose a random student who's on a bad team
 		# attempt to swap them with another random student (or should this be methodical?)
