@@ -6,6 +6,7 @@ import Team
 import Student
 import fileProcess
 import random
+import copy
 
 
 class Classroom:
@@ -97,17 +98,30 @@ class Classroom:
 
 		"""
 
+		# We first want to wipe the attributes of our Classroom instance, in case we have previously called sortIntoTeams()
+		# Fixed bug of teams/students accumulating in these lists with multiple sorts.
+		self.teamList = []
+		self.assignedStudents_viable = []
+		self.assignedStudents_bad = []
+		self.unassignedStudents = []
+		self.allViableTeams = []
+		self.assignedTeams_viable = []
+		self.assignedTeams_bad = []
+
 		print("Student list is: ")
 		for student in self.studentList:
 			print(student.getName(), end=", ")
 		print("\n")
 
-		self.generateAllTeams()  # TODO: bug after import, sort, sort
+		self.generateAllTeams()
 		self.sortStudentList()
 		self.getSeedTeams()
 		self.attemptToPlace()
+		self.handleUnassigned()
 		for team in self.assignedTeams_viable:
 			self.teamList.append(team)
+		for team in self.assignedTeams_bad:
+			self.teamList.append(Team)
 
 		# Print report to check results
 		print("\n\nAfter running sortIntoTeams() : \n")
@@ -373,8 +387,55 @@ class Classroom:
 				# don't forget to recalculate the values for the respective teams
 				bad_team.establish_metrics()
 				good_team.establish_metrics()
-
 			i += 1
+		return None
+
+	def handleUnassigned(self):
+		""" Places any remaining unassigned students onto the best possible of the currently existing teams.
+		IDEA:  Should the make sure that the unassigned students are the most available?"""
+
+		print("RUNNING HANDLE_UNASSIGNED: ")
+		while len(self.unassignedStudents) > 0:
+			student = self.unassignedStudents[0]
+			print("UNASSIGNED_STUDENT: ", student)
+			possibleTeams = []
+			for team in self.assignedTeams_viable: # we will only try to use previously viable teams to accommodate the unassigned students
+				if len(team.member_list) < (self.teamSize + 1): # we don't want to include teams that already have an extra member
+					original_team = team
+					possible_team = copy.deepcopy(team) # this solved the problem of having multiple amies, but why?
+					possible_team.addMember(student)
+					possible_team.establish_metrics()
+					possibleTeams.append([possible_team, original_team])
+
+			best_team = possibleTeams[0][0]
+			original_team = possibleTeams[0][1]
+			for sublist in possibleTeams:
+				potential_best = sublist[0]
+				corresponding_original = sublist[1]
+				if potential_best.quality_score > best_team.quality_score:
+					best_team = potential_best
+					original_team = corresponding_original
+			# now we have the best team
+			# get this student off of the unassigned list
+			self.unassignedStudents.remove(student)
+			# and put them (and the new team) on the correct list
+			if best_team.is_viable: # if it's a viable team, we only need to update the unassigned student
+				self.assignedTeams_viable.append(best_team)
+				self.assignedStudents_viable.append(student)
+			else: # otherwise, if the best we could do was create an unviable team, we should update everyone for reporting
+				self.assignedTeams_bad.append(best_team)
+				for member in best_team.member_ist:
+					if member not in self.assignedStudents_bad:
+						self.assignedStudents_bad.append(member)
+					if member in self.assignedStudents_viable:
+						self.assignedStudents_viable.remove(member)
+
+			# make sure every student has a reference to the new team they are on
+			for member in best_team.member_list:
+				member.assignedTeam = best_team
+
+			# finally, remove the original 3-person team from its list
+			self.assignedTeams_viable.remove(original_team)
 
 		return None
 
