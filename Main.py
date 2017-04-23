@@ -27,6 +27,8 @@ Add the logic to deal with unassigned students (groups not divisible by 3)
 - what do we do if the class size is less than the teamsize?
 - or if no viable teams can be created?  (maybe just report a message and abort the sort?)
 
+The key for the unviable teams is repeated..?
+
 - create some very small test cases, and intentionally unviable test cases
 
 Handling the case of a student(s) who aren't viable on ANY teams... Or is this already taken care of?

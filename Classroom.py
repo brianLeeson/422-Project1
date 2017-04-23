@@ -113,17 +113,32 @@ class Classroom:
 			print(student.getName(), end=", ")
 		print("\n")
 
-		self.generateAllTeams()
-		self.sortStudentList()
-		self.getSeedTeams()
-		self.attemptToPlace()
-		self.handleUnassigned()
-		for team in self.assignedTeams_viable:
-			self.teamList.append(team)
-		for team in self.assignedTeams_bad:
-			self.teamList.append(Team)
+		# Handle the case where the number of students is less than the teamSize,
+		# and therefore there is only one possible team.
+		if len(self.studentList) <= self.teamSize:
+			the_team = Team.Team(1);
+			for student in self.studentList:
+				the_team.addMember(student)
+				student.assignedTeam = the_team
+			the_team.establish_metrics()
+			if the_team.is_viable:
+				self.assignedTeams_viable.append(the_team)
+			else:
+				self.assignedTeams_bad.append(the_team)
+			self.teamList.append(the_team)
 
-		# Print report to check results
+		else:
+			self.generateAllTeams()
+			self.sortStudentList()
+			self.getSeedTeams()
+			self.attemptToPlace()
+			self.handleUnassigned()
+			for team in self.assignedTeams_viable:
+				self.teamList.append(team)
+			for team in self.assignedTeams_bad:
+				self.teamList.append(Team)
+
+		# Printed report to check results
 		print("\n\nAfter running sortIntoTeams() : \n")
 
 		print("Total number of students = ", len(self.studentList))
@@ -195,6 +210,12 @@ class Classroom:
 		print("length of team list: ", len(self.allViableTeams))
 		print()
 		return None
+
+	def generateAllTeams_itertools(selfs):
+		""" Attempting version of generateAllTeams that uses Python's itertools module to create team combinations,
+		which would allow us to implement variable teamsizes"""
+
+
 
 	def sortStudentList(self):
 		"""For each student in the studentList, sorts their list of potential teams in order of
@@ -348,43 +369,48 @@ class Classroom:
 		i = 0 # counter to ensure our while loop is not infinite
 		while (len(self.assignedTeams_bad) > 0 and i < 100000): # note that this is potentially infinite
 			bad_student_index = random.randint(0, len(self.assignedStudents_bad) - 1)
-			swapee_index = random.randint(0, len(self.assignedStudents_viable) - 1)
+			swapee_index = random.randint(0, len(self.studentList) - 1)
 			bad_student = self.assignedStudents_bad[bad_student_index]
-			swapee = self.assignedStudents_viable[swapee_index]
+			swapee = self.studentList[swapee_index]
 
-			bad_team = bad_student.assignedTeam
-			good_team = swapee.assignedTeam
+			if swapee not in self.unassignedStudents:
 
-			orig_total_quality = bad_team.quality_score + good_team.quality_score
 
-			self.swapTwoStudents(bad_student, swapee)
+				bad_team = bad_student.assignedTeam
+				good_team = swapee.assignedTeam
 
-			bad_team.establish_metrics()
-			good_team.establish_metrics()
-			new_total_quality = bad_team.quality_score + good_team.quality_score
+				orig_total_quality = bad_team.quality_score + good_team.quality_score
 
-			# case where both teams become viable - we want to keep this always
-			if (bad_team.is_viable and good_team.is_viable):
-				# make sure these teams and all their members are on the right lists
-				self.place_good(bad_team)
-				self.place_good(good_team)
+				self.swapTwoStudents(bad_student, swapee)
 
-			# case where at least one team is still viable and we want to keep the results
-			elif (bad_team.is_viable) and (new_total_quality >= orig_total_quality):
-				self.place_good(bad_team)
-				self.place_bad(good_team)
-
-			elif (good_team.is_viable) and (new_total_quality >= orig_total_quality):
-				self.place_good(good_team)
-				self.place_bad(bad_team)
-
-			else: # case where we don't want to keep the results
-				# swap the students back and nothing else should have to change
-				self.swapTwoStudents(swapee, bad_student)
-				# don't forget to recalculate the values for the respective teams
 				bad_team.establish_metrics()
 				good_team.establish_metrics()
-			i += 1
+				new_total_quality = bad_team.quality_score + good_team.quality_score
+
+				# case where both teams become viable - we want to keep this always
+				if (bad_team.is_viable and good_team.is_viable):
+					# make sure these teams and all their members are on the right lists
+					self.place_good(bad_team)
+					self.place_good(good_team)
+
+				# case where at least one team is still viable and we want to keep the results
+				elif (bad_team.is_viable) and (new_total_quality >= orig_total_quality):
+					self.place_good(bad_team)
+					self.place_bad(good_team)
+
+				elif (good_team.is_viable) and (new_total_quality >= orig_total_quality):
+					self.place_good(good_team)
+					self.place_bad(bad_team)
+
+				else: # case where we don't want to keep the results
+					# swap the students back and nothing else should have to change
+					self.swapTwoStudents(swapee, bad_student)
+					# don't forget to recalculate the values for the respective teams
+					bad_team.establish_metrics()
+					good_team.establish_metrics()
+				i += 1
+			else:
+				continue
 		return None
 
 	def handleUnassigned(self):
