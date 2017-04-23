@@ -62,19 +62,18 @@ class Team:
 		Calculates total time overlaps and sets self.time_overlap."""
 		overlap = 0
 		dayslist = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-		# TODO: below 3 lines hardcodes team size 3
-		s1 = self.member_list[0]
-		s2 = self.member_list[1]
-		s3 = self.member_list[2]
 		for day in dayslist:
-			s1_avail = s1.getAvailability()[day]
-			s2_avail = s2.getAvailability()[day]
-			s3_avail = s3.getAvailability()[day]
+			member_avails = [] # collect sublists: each member's availability list for a given day
+			for student in self.member_list:
+				member_avails.append(student.getAvailability()[day])
 
-			for i in range(len(s1_avail)):
-				if (s1_avail[i] == 1) and (s2_avail[i] == 1) and (s3_avail[i] == 1):
+			for i in range(len(member_avails[0])): # For each time slot
+				overlapping = True
+				for j in range(len(member_avails)): # for each student
+					if (member_avails[j][i] == 0): # if any entry in that slot == 0, we do not consider it mutually available
+						overlapping = False
+				if overlapping:
 					overlap += 1
-
 		self.time_overlap = overlap
 		return None
 
@@ -83,7 +82,7 @@ class Team:
 		and returns True / False accordingly."""
 		self.is_viable = False  # RESET in case we were re-calculating a pre-existing team
 		if self.num_common_langs >= 1:
-			if self.time_overlap >= 4:
+			if self.time_overlap >= 3:
 				self.is_viable = True
 		return None
 

@@ -5,6 +5,7 @@ Author(s): Brian Leeson + Jamie Zimmerman + Amie Corso
 import Team
 import random
 import copy
+import itertools
 
 
 class Classroom:
@@ -30,7 +31,7 @@ class Classroom:
 		# TODO Is this how we want our weights to look?
 		# We could break them out into individual attributes
 		self.weights = []  # currently unused
-		self.teamSize = 3
+		self.teamSize = 4
 
 		self.sortingSuccess = False
 
@@ -116,7 +117,8 @@ class Classroom:
 			self.teamList.append(the_team)
 
 		else:
-			self.generateAllTeams()
+			#self.generateAllTeams()
+			self.generateAllTeams_itertools()
 			self.sortStudentList()
 			self.getSeedTeams()
 			self.attemptToPlace()
@@ -199,11 +201,35 @@ class Classroom:
 		print()
 		return None
 
-	def generateAllTeams_itertools(selfs):
+	def generateAllTeams_itertools(self):
 		""" Attempting version of generateAllTeams that uses Python's itertools module to create team combinations,
 		which would allow us to implement variable teamsizes"""
+		student_permutations = itertools.combinations(self.studentList, self.teamSize)
 
+		teamID = 0
+		for member_list in student_permutations:
+			new_team = Team.Team(teamID)
+			for student in member_list:
+				new_team.addMember(student)
+			new_team.establish_metrics()
+			if new_team.is_viable:
+				print("Team ", teamID, ": com_lang =", new_team.common_langs, " time_overlap =",
+					  new_team.time_overlap, " viability =", new_team.is_viable)
+				for member in new_team.member_list:
+					member.potential_teams.append(new_team)
+					print(member.name, end=' ')
+				print()
+				self.allViableTeams.append(new_team)
+			teamID += 1
 
+		self.allViableTeams.sort()
+		self.allViableTeams.reverse()
+
+		print()
+		print("finished making teams")
+		print("length of team list: ", len(self.allViableTeams))
+		print()
+		return None
 
 	def sortStudentList(self):
 		"""For each student in the studentList, sorts their list of potential teams in order of
@@ -435,7 +461,7 @@ class Classroom:
 				self.assignedStudents_viable.append(student)
 			else: # otherwise, if the best we could do was create an unviable team, we should update everyone for reporting
 				self.assignedTeams_bad.append(best_team)
-				for member in best_team.member_ist:
+				for member in best_team.member_list:
 					if member not in self.assignedStudents_bad:
 						self.assignedStudents_bad.append(member)
 					if member in self.assignedStudents_viable:

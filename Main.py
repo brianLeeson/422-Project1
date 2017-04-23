@@ -15,7 +15,6 @@ ourclass.setStudentList(fileProcess.process(ourclass.getCSV()))
 
 ourclass.sortIntoTeams()
 
-
 """Amie's Notes to herself:
 
 TODO:
