@@ -26,5 +26,5 @@ Setup:
 To run the application:
  * run our application with "make run".
  * import the survey results csv
- * sort
+ * sort students into teams
  * optionally export sorted teams to csv for review.
