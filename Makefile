@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+SHELL := /bin/bash
 # Author(s): Brian
 
 SOURCES = groupApp.py
@@ -6,7 +8,6 @@ VENV = python3 -m venv
 env:
 	$(VENV) ./env
 	(source ./env/bin/activate; pip install -r requirements.txt) || true
-
 
 freeze:
 	(pip freeze | grep -v "pkg-resources" > requirements.txt) || true
@@ -21,7 +22,7 @@ clean:
 veryclean:
 	make clean
 	rm -rf env
-	rm log.txt
+	clear > log.txt
 
 
 
