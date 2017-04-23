@@ -1,9 +1,30 @@
+#!/usr/bin/env bash
+SHELL := /bin/bash
 # Author(s): Brian
 
 SOURCES = groupApp.py
+VENV = python3 -m venv
 
-run:  $(SOURCES)
-	python3 groupApp.py &
+env:
+	$(VENV) ./env
+	(source ./env/bin/activate; pip install -r requirements.txt) || true
+
+freeze:
+	(pip freeze | grep -v "pkg-resources" > requirements.txt) || true
+
+run: env
+	. env/bin/activate; python3 groupApp.py > log.txt
+
+clean:
+	rm -rf __pycache__
+	rm -f team_decisions.csv
+
+veryclean:
+	make clean
+	rm -rf env
+	clear > log.txt
+
+
 
 # when using mastUp and locUp, make sure that the recipe did not fail by reading the last line.
 # locUp and mastUp will NOT commit for you. make sure you commit your branch changes.
