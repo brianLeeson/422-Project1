@@ -96,9 +96,8 @@ def display():
 
 def exportCB():
 		"""
-		Function exports csv of sort teams to cwd
+		Function exports csv of sorted teams to csv
 		"""
-		# TODO: Need function in file process to call
 		fp.export(CLASSROOM.getTeamList())
 
 		print("exported")
@@ -113,10 +112,10 @@ mainFrame = tk.Frame(app, bd=1, relief=tk.SUNKEN)
 mainFrame.grid(row=0, column=0)
 
 # --- Frame 0 --- Name
-nameFrame = tk.Frame(mainFrame, bd=1)  # TODO: types of relief?
+nameFrame = tk.Frame(mainFrame, bd=1)
 nameFrame.grid(row=0, column=0, columnspan=3)
 
-nameLabel = tk.Label(nameFrame, text="Name:")
+nameLabel = tk.Label(nameFrame, text="Instructor: ")
 nameLabel.grid(row=0, column=0)
 
 nameEntry = tk.Entry(nameFrame)
@@ -126,17 +125,17 @@ nameEntry.grid(row=0, column=1)
 crnFrame = tk.Frame(mainFrame, bd=1)
 crnFrame.grid(row=1, column=0, columnspan=3)
 
-crnLabel = tk.Label(crnFrame, text="CRN:")
+crnLabel = tk.Label(crnFrame, text="CRN: ")
 crnLabel.grid(row=0, column=0)
 
 crnEntry = tk.Entry(crnFrame)
 crnEntry.grid(row=0, column=1)
 
-# --- Frame 2 --- NUMSTUDENT
+# --- Frame 2 --- numstudent
 numStudentFrame = tk.Frame(mainFrame, bd=1)
 numStudentFrame.grid(row=2, column=0, columnspan=3)
 
-numStudentLabel = tk.Label(numStudentFrame, text="Group Size:")
+numStudentLabel = tk.Label(numStudentFrame, text="Group Size: ")
 numStudentLabel.grid(row=0, column=0)
 
 numStudentSpin = tk.Spinbox(numStudentFrame, from_=2, to=6)
@@ -148,7 +147,9 @@ numStudentSpin.grid(row=0, column=1)
 description = tk.Frame(mainFrame, bd=1)
 description.grid(row=3, column=0, columnspan=3)
 
-descriptionLabel = tk.Label(description, text="DESCRIPTION HERE")
+descriptionText = "Surveys in csv form can be imported, sorted into teams and" \
+					" exported as a csv for further changes if needed."
+descriptionLabel = tk.Label(description, text=descriptionText, wraplength=200)
 descriptionLabel.grid(row=0, column=0)
 
 # --- Frame 4 --- BUTTONS
@@ -164,9 +165,8 @@ sortButton.grid(row=0, column=1)
 exportButton = tk.Button(processFrame, text="export", command=exportCB)
 exportButton.grid(row=0, column=2)
 
-
 # --- Canvas
-canvasFrame = tk.Frame(mainFrame, bd=1, width=500, height=500, bg="white")
+canvasFrame = tk.Frame(mainFrame, bd=1, width=500, height=230, bg="white")
 canvasFrame.grid(row=0, column=3, rowspan=5)
 
 # runs the app
