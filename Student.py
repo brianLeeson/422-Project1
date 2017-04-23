@@ -23,7 +23,7 @@ class Student:
 					'Wednesday': [],
 					'Thursday': [],
 					'Friday': []}
-		self.teammates = []  # list of strings - duckIDs of desired teammates
+		self.requests = []  # list of strings - duckIDs of desired teammates
 		self.potential_teams = [] # used during sorting process to keep track of which teams on which a student COULD appear
 		self.assignedTeam = None  # keeps track during sorting process of which team a student is associated with
 								  # final once the sorting process is complete
@@ -111,7 +111,7 @@ class Student:
 		self.availability = graph
 		return None
 
-
+#________________________ FIX_______________________
 	def setTeammates(self, buddies):
 		'''
 		input: buddies is a list of strings, the duck ID's of desired teammates

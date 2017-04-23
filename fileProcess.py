@@ -93,7 +93,7 @@ def export(decided_teams):
 		writer.writeheader()
 		i = 1
 		for team in decided_teams:
-			# TODO print team's UID, not just a random number
+			# TODO print team's UID, not just a random number #TODO WRITE ROW FOR A FOURTH STUDENT
 			teammates = team.getMemberList()
 			writer.writerow({'Team Number': i, 'Student 1': teammates[0], 'Student 2': teammates[1], 'Student 3': teammates[2]})
 			i += 1
