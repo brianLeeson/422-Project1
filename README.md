@@ -18,9 +18,10 @@ bash shell
 
 ###Instructions:  
 Setup:
- * make sure all dependencies are installed
+ * make sure all dependencies are installed.
  * "git clone https://github.com/brianLeeson/422-Project1"
- * TODO google survey
+ * survey available at: https://tinyurl.com/422formsurvey
+ * remove previous survey results before sending out new surveys.
  * after all responses are gathered, export the google form to csv  
  
 To run the application:
