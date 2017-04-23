@@ -11,7 +11,7 @@ class Team:
 	def __init__(self, identifier):
 		self.number = identifier
 		self.member_list = []
-		self.team_name = ''
+		self.team_name = '' # Not currently used
 
 		self.num_common_langs = 0
 		self.common_langs = []
@@ -117,9 +117,6 @@ class Team:
 		return None
 
 	def addMember(self, teammate):
-		#if len(self.member_list) == 3:  # TODO don't hard code 3, compare to group size
-			#return False  # TODO error checking - how does user become informed if it has tried to add too many people
-							# Or should we handle this case elsewhere in the function(s) that may use addMember?
 		self.member_list.append(teammate)
 		return None
 	

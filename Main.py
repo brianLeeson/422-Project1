@@ -16,42 +16,30 @@ ourclass.setStudentList(fileProcess.process(ourclass.getCSV()))
 ourclass.sortIntoTeams()
 
 """Amie's Notes to herself:
-
 TODO:
-
-Need to increase random potential of swaps (including between members who are both on unviable teams).
-So this means allowing swapees to be the entire pool of students not just assigned_viable
-
-Add the logic to deal with unassigned students (groups not divisible by 3)
-- what do we do if the class size is less than the teamsize?
-- or if no viable teams can be created?  (maybe just report a message and abort the sort?)
-
-The key for the unviable teams is repeated..?
-
-- create some very small test cases, and intentionally unviable test cases
-
-Handling the case of a student(s) who aren't viable on ANY teams... Or is this already taken care of?
-
-That weird bug where we lost a team......
-
-fix direct attribute reference with usage of getters and setters
-DO IT
-
-Algorithm Wishlist:
-- request consideration (up quality score) (student.requests)
+- The key for the unviable teams is repeated..?
+- TEST CASES!
+- fix direct attribute reference with usage of getters and setters
+    why isn't getName working with the __str__ override? (Student class)
+- request consideration (up quality score?) (student.requests)
 - useage of weights for sorting criteria
-- fix so that teamsize is a real parameter (itertools?)
-Clean up printing for better discussion?
+        How do we allow the user to populate the weights?
+        Maybe we allow them to specify minimum acceptable skill in a language / minimum hours in common for a team.
+        And then the weights are specified by the user ranking the relative importance of each criteria.
+        What is our final decision on what it means to have a good team?
+        i.e. What is the minimum viable overlap? Is this something that should be specifiable by user?
 
-IDEAS:
+- Clean up printing
+
+*IDEAS*:
 What if we start by grabbing teams that have closer-to-average quality scores?
 so that we don't make any unbreakable teams by the random swap method....
 
-Student Class:
-- I overwrote the CMP method because apparently you have to overwrite all 6 rich comparison operators
-* why isn't getName working??
+Handling the case of a student(s) who aren't viable on ANY teams... Or is this already taken care of by default?
+(Do we want any special messages or handling?)
 
-How do I get the __str__ override to print a prettier version? (for the Team class, for example)
+That weird bug where we lost a team......?
+
 
 
 BRIAN:
@@ -79,7 +67,7 @@ JAMIE:
 
 AMIE:
 -  algorithm notes above
-- comments/docstrings
+- cleaner, more descriptive comments/docstrings
 - fix what Jamie manages to break
 
 """
