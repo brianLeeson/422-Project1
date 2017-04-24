@@ -47,11 +47,10 @@ def sortCB():
 		size = int(numStudentSpin.get())
 		name = nameEntry.get()
 		crn = crnEntry.get()
-		# TODO: set teamsize when size of !3 is allowed
-		# classroom.setTeamSize(size)
 
 		# create new Classroom instance. overwrites global
 		CLASSROOM = Classroom.Classroom(crn, name)
+		CLASSROOM.setTeamSize(size)
 
 		# files process
 		if len(PATH):  # if they picked something
@@ -62,6 +61,7 @@ def sortCB():
 
 		CLASSROOM.sortIntoTeams()
 		print("sorted")
+		print(CLASSROOM.getTeamSize())
 
 		display()
 
@@ -74,11 +74,15 @@ def display():
 	"""
 	global CLASSROOM
 
+	# --- Clear frame
+	for widget in canvasFrame.winfo_children():
+		widget.destroy()
+
 	# --- Make and display team string
 	tCount = 0
 	row = 0
 	col = 0
-	for team in CLASSROOM.teamList:
+	for team in CLASSROOM.getTeamList():
 		teamText = "TeamID: " + str(team.getNumber()) + "\n"
 		for student in team.getMemberList():
 			teamText += student.getName() + "\n"
@@ -138,7 +142,7 @@ numStudentFrame.grid(row=2, column=0, columnspan=3)
 numStudentLabel = tk.Label(numStudentFrame, text="Group Size: ")
 numStudentLabel.grid(row=0, column=0)
 
-numStudentSpin = tk.Spinbox(numStudentFrame, from_=2, to=6)
+numStudentSpin = tk.Spinbox(numStudentFrame, from_=3, to=5)
 numStudentSpin.delete(0, 2)
 numStudentSpin.insert(0, 3)
 numStudentSpin.grid(row=0, column=1)
