@@ -3,6 +3,7 @@ Author(s): Brian Leeson + Jamie Zimmerman + Amie Corso
 
 """
 
+
 class Student:
 	""" 
 	This class will represent an individuals survey results
