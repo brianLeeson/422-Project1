@@ -48,7 +48,7 @@ def generate_students(people, csv_name):
 	return None
 
 def generate_no_pairings():
-	with open("test_cases/no_pairings.csv", 'w') as csvfile:
+	with open("no_pairings_extreme.csv", 'w') as csvfile:
 		fieldnames = ['Timestamp', 'Student Name', 'Your DuckID', 'Python experience', 'Java experience', 'Javascript experience', 'C experience', 'C++ experience', 'PHP experience', 'HTML experience', 'SQL experience', 'Bash/Unix experience', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', "Desired Teammates DuckIDs (separated by ';')"]
 		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 		writer.writeheader()
@@ -86,11 +86,11 @@ def generate_no_pairings():
 
 # ------------------------------------------------------------
 if __name__ == '__main__':
-	generate_students(38, 'test_cases/too_big.csv')
-	generate_students(2, 'test_cases/too_small.csv')
-	generate_students(9, 'test_cases/one_extra.csv')
-	generate_students(20, 'test_cases/two_extra.csv')
-	generate_students(4, 'test_cases/odd_one_out.csv')
+	generate_students(38, 'too_big.csv')
+	generate_students(2, 'too_small.csv')
+	generate_students(9, 'one_extra.csv')
+	generate_students(20, 'two_extra.csv')
+	generate_students(4, 'odd_one_out.csv')
 	generate_no_pairings()
 
 

@@ -146,4 +146,3 @@ if __name__ == '__main__':
 	team.setMemberList([student1, student2, student3])
 	for guy in team.getMemberList():
 		print(guy)
-	

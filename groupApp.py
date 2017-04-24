@@ -79,7 +79,7 @@ def display():
 	row = 0
 	col = 0
 	for team in CLASSROOM.teamList:
-		teamText = "TeamID: " + str(team.getNumber()) + "\n"
+		teamText = "TeamID: {}\n".format(team.getNumber())
 		for student in team.getMemberList():
 			teamText += student.getName() + "\n"
 		teamText += "Quality score: " + str(team.quality_score)
