@@ -1,6 +1,8 @@
 """
 Author(s): Brian Leeson
-
+This file brings all of the code for the project together
+It handles the creation of GUI and it's functions 
+and calls appropriate sorting and class creation functions
 """
 
 import Classroom
@@ -8,9 +10,6 @@ import tkinter as tk
 from tkinter import filedialog
 import fileProcess as fp
 
-# WISHLIST - in order
-# APPA
-# weight labels and sliders
 
 # Classroom instance stores data
 CLASSROOM = Classroom.Classroom("0", "")  # Global variable instance
@@ -23,47 +22,49 @@ def importCB():
 		called when import button clicked
 		function prompts user to select path to csv 
 		and processes csv
+		returns None
 		"""
 		global PATH
 
 		# prompt user for path
 		PATH = filedialog.askopenfilename()
 
-		# files process
-		if len(PATH):  # if they picked something
-			print("imported")
-
 		return None
 
 
 def sortCB():
 		"""
-		Function calls sort on classroom class.
+		Called when sort button clicked
+		Function get values from fields in the GUI, 
+		then calls sort on classroom class.
+		finally, teams are displayed
+		returns None
 		"""
 		global CLASSROOM
 		global PATH
 
-		# Get Field Values
-		size = int(numStudentSpin.get())
-		name = nameEntry.get()
-		crn = crnEntry.get()
+		# if a path to a survey csv exists
+		if len(PATH):
+			# Get Field Values
+			size = int(numStudentSpin.get())
+			name = nameEntry.get()
+			crn = crnEntry.get()
 
-		# create new Classroom instance. overwrites global
-		CLASSROOM = Classroom.Classroom(crn, name)
-		CLASSROOM.setTeamSize(size)
+			# create new Classroom instance. overwrites global
+			CLASSROOM = Classroom.Classroom(crn, name)
+			CLASSROOM.setTeamSize(size)
 
-		# files process
-		if len(PATH):  # if they picked something
+			# files process
 			studentCollection = fp.process(PATH)
 
 			# assign to classroom class
 			CLASSROOM.setStudentList(studentCollection)
 
-		CLASSROOM.sortIntoTeams()
-		print("sorted")
-		print(CLASSROOM.getTeamSize())
+			# sort into teams
+			CLASSROOM.sortIntoTeams()
 
-		display()
+			# display on GUI
+			display()
 
 		return None
 
@@ -71,14 +72,16 @@ def sortCB():
 def display():
 	"""
 	this function displays the currently sorted teams on the canvas
+	This function could be changed to allow for more dynamic display options
+	returns None
 	"""
 	global CLASSROOM
 
-	# --- Clear frame
+	# Clear frame
 	for widget in canvasFrame.winfo_children():
 		widget.destroy()
 
-	# --- Make and display team string
+	# Make and display team string
 	tCount = 0
 	row = 0
 	col = 0
@@ -104,10 +107,9 @@ def display():
 def exportCB():
 		"""
 		Function exports csv of sorted teams to csv
+		returns None
 		"""
 		fp.export(CLASSROOM.getTeamList())
-
-		print("exported")
 
 		return None
 
