@@ -7,7 +7,15 @@ VENV = python3 -m venv
 
 # User instructions:
 # In order to construct and run this project type "make run" into the shell window
-# This should open the application. To quit the application, simply close out of the window.
+# This should create the virtual environment and install any dependencies,
+# finally running the application. To quit the application, simply close out of the window.
+
+# To add a dependency to this project:
+# create the virtual environment with "make env"
+# go into the virtual environment with "source ./env/bin/activate"
+# install any new dependencies
+# use "make freeze" to write the state to requirements.txt
+# get out of the virtual environment with "deactivate"
 
 env:
 	$(VENV) ./env
