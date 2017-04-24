@@ -2,7 +2,7 @@
 
 This folder contains various sample inputs meant to test the robustness of the sorting algorithm.
 
-generate.py -> this script writes the csv files. It creates random strings for names, random numbers for coding skills, and chooses randomly from a list of time availability combinations.
+generate.py -> this script writes the csv files. It creates random strings for names, random numbers for coding skills, and chooses randomly from a list of time availability combinations. This script should not be used any more, as it has already created the below sample class inputs.
 
 no_pairings_extreme.csv -> a classroom where every student has literally NO time availability, has listed "None" for every one of their meeting times. This situation is wildly unrealistic to happen in real-life.
 
