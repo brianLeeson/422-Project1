@@ -31,7 +31,7 @@ class Classroom:
 		# TODO Is this how we want our weights to look?
 		# We could break them out into individual attributes
 		self.weights = []  # currently unused
-		self.teamSize = 4
+		self.teamSize = 4  # 4 by default
 
 		self.sortingSuccess = False
 
@@ -126,7 +126,7 @@ class Classroom:
 			for team in self.assignedTeams_viable:
 				self.teamList.append(team)
 			for team in self.assignedTeams_bad:
-				self.teamList.append(Team)
+				self.teamList.append(team)
 
 		# Printed report to check results
 		print("\n\nAfter running sortIntoTeams() : \n")

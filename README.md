@@ -5,19 +5,27 @@ The project authors are:
 2. Jamie Zimmerman
 3. Amie Corso
 
-Description:
-This project attempts to solve the problem of sorting student into groups for the 422 course
+###Description:
+This project attempts to solve the problem of sorting student into groups for the 422 course.
 Students are asked to fill out a short survey about themselves and are sorted into groups
-based on survey data.
+based on survey data. We use python3 to sort students into teams and a GUI made with the tk library
+to interface with the user.
 
-
-Dependencies:
+###Dependencies:
+git 
 python 3.*
 bash shell
 
-Instructions:  
-To run the application:  
- make sure all dependencies are installed  
- make and send out a google form survey # TODO: elaborate. link to template?  
- after all responses are gathered, export the google form to csv  
- run groupApp.py by typing "python3 groupApp.py"
+###Instructions:  
+Setup:
+ * make sure all dependencies are installed.
+ * "git clone https://github.com/brianLeeson/422-Project1"
+ * survey available at: https://tinyurl.com/422formsurvey
+ * remove previous survey results before sending out new surveys.
+ * after all responses are gathered, export the google form to csv  
+ 
+To run the application:
+ * run our application with "make run".
+ * import the survey results csv
+ * sort students into teams
+ * optionally export sorted teams to csv for review.

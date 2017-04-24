@@ -5,6 +5,10 @@ SHELL := /bin/bash
 SOURCES = groupApp.py
 VENV = python3 -m venv
 
+# User instructions:
+# In order to construct and run this project type "make run" into the shell window
+# This should open the application. To quit the application, simply close out of the window.
+
 env:
 	$(VENV) ./env
 	(source ./env/bin/activate; pip install -r requirements.txt) || true
@@ -24,8 +28,8 @@ veryclean:
 	rm -rf env
 	clear > log.txt
 
-
-
+# Developer tools
+#
 # when using mastUp and locUp, make sure that the recipe did not fail by reading the last line.
 # locUp and mastUp will NOT commit for you. make sure you commit your branch changes.
 # if either command fails, check your commits
