@@ -44,11 +44,11 @@ class Classroom:
 		# Parameterized to allow easy adjustment, and potentially input from the user in the future.
 		self.min_acceptable_lang_proficiency = 3 # self-reported proficiency of (min_acceptable_lang_proficiency)\
 												 #  (scale of 1 -5) or greater means language could be used
-		self.min_team_overlapping_langs = 1   # teams need at least (min_team_overlapping_langs) language in common
+		self.min_team_overlapping_langs = 2   # teams need at least (min_team_overlapping_langs) language in common
 		self.min_team_overlapping_timeslots = 2  # at least (2 * min_team_overlapping_timeslots) mutual hours per week necessary
 		self.schedule_factor = 1 # (schedule_factor * team.num_overlapping_timeslots) is added to team quality score
 		self.langs_factor = 2   # (langs_factor * team.num_overlapping_langs) is added to quality score
-		self.request_factor = 2 # adds (request_factor) to quality_score of team for each request that is satisfied
+		self.request_factor = 1 # adds (request_factor) to quality_score of team for each request that is satisfied
 								# (for each instance that a duckID in a team member's request list is that of an actual teammate)
 
 
@@ -107,14 +107,9 @@ class Classroom:
 		Returns None.
 
 		Calls:
-		generateAllTeams_itertools()
-		sortStudentList()
-		getSeedTeams()
-		attemptToPlace()
-		handleUnassigned()
+		performSort()
 
 		"""
-
 		print("Student list is: ")
 		for student in self.studentList:
 			print(student.getName(), end=", ")
@@ -133,62 +128,25 @@ class Classroom:
 				self.assignedTeams_viable.append(the_team)
 			else:
 				self.assignedTeams_bad.append(the_team)
-			self.teamList.append(the_team)
 
 		else:
-			#self.generateAllTeams()
-			self.generateAllTeams_itertools()
-			self.sortStudentList()
-			self.getSeedTeams()
-			self.attemptToPlace()
-			if len(self.unassignedStudents) > 0: # only execute the following if our class size is not a multiple of teamSize
-				self.handleUnassigned()
-				self.attemptToPlace() # a second call to attemptToPlace() attempts to refine the assignments after unassigned students
-									  # have been assigned to team(s).
-			# Finally, populate the offical teamList attribute for this class.
-			for team in self.assignedTeams_viable:
-				self.teamList.append(team)
-			for team in self.assignedTeams_bad:
-				self.teamList.append(team)
+			max_sort_attempts = 5 # maximum times that we will try to run sorting algorithm
+			current_attempt = 0
+			while current_attempt < max_sort_attempts:
+				print("\n SORT ATTEMPT", str(current_attempt))
+				self.performSort() # wrapper function for all sorting subfunctions
+				if len(self.assignedTeams_bad) > 0: # if we still have unviable teams...
+					current_attempt += 1 # try again
+				else:  # otherwise, short-circuit the while loop
+					current_attempt = max_sort_attempts
 
-		# Printed report to check results
-		print("\n\nAfter running sortIntoTeams() : \n")
-
-		print("Total number of students = ", len(self.studentList))
-		print("assignedStudents_viable = ", end='')
-		for student in self.assignedStudents_viable:
-			print(student.name, end=", ")
-		print()
-		print("assignedStudents_bad = ", end='')
-		for student in self.assignedStudents_bad:
-			print(student.name, end=", ")
-		print()
-		print("unassigned_students = ", end='')
-		for student in self.unassignedStudents:
-			print(student.name, end=", ")
-		print()
-
-		print("Number of VIABLE (assigned) teams is: ", len(self.assignedTeams_viable))
-		print("Number of UNVIABLE (assigned) teams is: ", len(self.assignedTeams_bad))
-
-		print("\nReport of viable teams: ")
+		# finally, populate final team list with results
 		for team in self.assignedTeams_viable:
-			print("Team ", team.number, "Quality score: ", team.quality_score, ": com_lang =", team.common_langs,
-				" time_overlap =", team.time_overlap, " viability =", team.is_viable)
-			for member in team.member_list:
-				print(member.name, end=' ')
-			print()
-
-		print("\nReport of UNviable teams: ")
+			self.teamList.append(team)
 		for team in self.assignedTeams_bad:
-			print("Team ", team.number, "Quality score: ", team.quality_score, ": com_lang =", team.common_langs,
-				  " time_overlap =",
-				  team.time_overlap, " viability =", team.is_viable)
-			for member in team.member_list:
-				print(member.name, end=' ')
-			print()
-
+			self.teamList.append(team)
 		return None
+
 	"""
 # Function has been replaced with version using Python's itertools module.
 	def generateAllTeams(self):
@@ -227,6 +185,23 @@ class Classroom:
 		return None
 """
 
+	def performSort(self):
+		# first reset member attributes, in case this is not the first sort we are performing
+		self.assignedStudents_viable = []
+		self.assignedStudents_bad = []
+		self.unassignedStudents = []
+		self.allViableTeams = []
+		self.assignedTeams_viable = []
+		self.assignedTeams_bad = []
+		self.uniqueID = 0
+
+		self.generateAllTeams_itertools()
+		self.sortStudentList()
+		self.getSeedTeams()
+		if len(self.unassignedStudents) > 0:  # only execute the following if our class size is not a multiple of teamSize
+			self.handleUnassigned()
+		self.attemptToPlace()  # attempt to refine the assignments after unassigned students have been assigned to team(s).
+		return None
 
 	def generateAllTeams_itertools(self):
 		""" Uses Python's itertools module to generate all possible team combinations of size teamSize.
@@ -241,12 +216,12 @@ class Classroom:
 			new_team.establish_metrics(self.min_acceptable_lang_proficiency, self.min_team_overlapping_langs,\
 					self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor, self.request_factor)
 			if new_team.is_viable:
-				print("Team ", self.uniqueID, ": com_lang =", new_team.common_langs, " time_overlap =",
-					  new_team.time_overlap, " viability =", new_team.is_viable)
+				#print("Team ", self.uniqueID, ": com_lang =", new_team.common_langs, " time_overlap =",
+				#	  new_team.time_overlap, " viability =", new_team.is_viable)
 				for member in new_team.member_list:
 					member.potential_teams.append(new_team)
-					print(member.name, end=' ')
-				print()
+				#	print(member.name, end=' ')
+				#print()
 				self.allViableTeams.append(new_team)
 			self.uniqueID += 1 # increment class variable uniqueID any time it is used
 
@@ -264,18 +239,18 @@ class Classroom:
 		decreasing quality score.  Then sorts studentList in order of increasing number of potential teams.
 		This is achieved by overwritten rich comparison methods.  Returns None."""
 
-		print("\n\nRUNNING SORT_STUDENT_LIST\n")
+		#print("\n\nRUNNING SORT_STUDENT_LIST\n")
 		for student in self.studentList:
 			student.sort_potential_teams()
 		# now sort our list of students by which has the fewest number of potential teams in their list
 		self.studentList.sort()
 
-		for student in self.studentList:
-			print(student.getName(), ": len of potential teams = ", len(student.potential_teams))
-			for team in student.potential_teams:
-				print(team.quality_score, end=', ')
-
-			print()
+		# for student in self.studentList:
+		# 	print(student.getName(), ": len of potential teams = ", len(student.potential_teams))
+		# 	for team in student.potential_teams:
+		# 		print(team.quality_score, end=', ')
+        #
+		# 	print()
 
 		return None
 
@@ -356,9 +331,6 @@ class Classroom:
 		for student in self.unassignedStudents:
 			print(student.name, end=", ")
 		print()
-
-
-		# TODO: deal with the unassigned leftover students
 		return None
 
 	def attemptToPlace(self):
@@ -406,14 +378,14 @@ class Classroom:
 
 
 		i = 0 # counter to ensure our while loop is not infinite
-		while (len(self.assignedTeams_bad) > 0 and i < 50000): # We can stop when all teams are viable or we've performed this 50000 times
+		while (len(self.assignedTeams_bad) > 0 and i < 20000): # We can stop when all teams are viable or we've performed this enough times
 
 			bad_student_index = random.randint(0, len(self.assignedStudents_bad) - 1)
 			swapee_index = random.randint(0, len(self.studentList) - 1)
 			bad_student = self.assignedStudents_bad[bad_student_index]
 			swapee = self.studentList[swapee_index]
 
-			if swapee not in self.unassignedStudents:
+			if swapee not in self.unassignedStudents: # self.unassignedStudents should actually be empty at this point anyway
 
 
 				bad_team = bad_student.assignedTeam
@@ -438,11 +410,17 @@ class Classroom:
 				# case where at least one team is still viable and we want to keep the results
 				elif (bad_team.is_viable) and (new_total_quality >= orig_total_quality):
 					self.place_good(bad_team)
-					self.place_bad(good_team)
+					if good_team.is_viable:
+						self.place_good(good_team)
+					else:
+						self.place_bad(good_team)
 
 				elif (good_team.is_viable) and (new_total_quality >= orig_total_quality):
 					self.place_good(good_team)
-					self.place_bad(bad_team)
+					if bad_team.is_viable:
+						self.place_good(bad_team)
+					else:
+						self.place_bad(bad_team)
 
 				else: # case where we don't want to keep the results
 					# swap the students back and nothing else should have to change
@@ -455,6 +433,41 @@ class Classroom:
 				i += 1
 			else:
 				continue
+
+		print("\n And now what have we got?....\n")
+		print("Total number of students = ", len(self.studentList))
+		print("assignedStudents_viable = ", end='')
+		for student in self.assignedStudents_viable:
+			print(student.name, end=", ")
+		print()
+		print("assignedStudents_bad = ", end='')
+		for student in self.assignedStudents_bad:
+			print(student.name, end=", ")
+		print()
+		print("unassigned_students = ", end='')
+		for student in self.unassignedStudents:
+			print(student.name, end=", ")
+		print()
+
+		print("Number of VIABLE (assigned) teams is: ", len(self.assignedTeams_viable))
+		print("Number of UNVIABLE (assigned) teams is: ", len(self.assignedTeams_bad))
+
+		print("\nReport of viable teams: ")
+		for team in self.assignedTeams_viable:
+			print("Team ", team.number, "Quality score: ", team.quality_score, ": com_lang =", team.common_langs, " time_overlap =",
+				  team.time_overlap, " viability =", team.is_viable)
+			for member in team.member_list:
+				print(member.name, end=' ')
+			print()
+
+		print("\nReport of UNviable teams: ")
+		for team in self.assignedTeams_bad:
+			print("Team ", team.number, "Quality score: ", team.quality_score, ": com_lang =", team.common_langs,
+				  " time_overlap =",
+				  team.time_overlap, " viability =", team.is_viable)
+			for member in team.member_list:
+				print(member.name, end=' ')
+			print()
 		return None
 
 	def handleUnassigned(self):
@@ -472,7 +485,7 @@ class Classroom:
 
 			while len(self.unassignedStudents) > 0: # while we still have students waiting to be assigned
 				student = self.unassignedStudents[0] # grab the first one sitting in the list
-				print("UNASSIGNED_STUDENT: ", student)
+				print("processing UNASSIGNED_STUDENT: ", student)
 				possibleTeams = []
 				for i in range(len(self.assignedTeams_viable)): # we will generate possible teams from existing teams
 					original_team = self.assignedTeams_viable[i]
@@ -485,8 +498,6 @@ class Classroom:
 						possible_team.establish_metrics(self.min_acceptable_lang_proficiency, self.min_team_overlapping_langs,\
 										   self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor, self.request_factor)
 						# populating a structure that associates the possible new team and the original team from which it was derived
-						print("possible_team: ", str(possible_team))
-						print("original_team: ", str(original_team))
 						possibleTeams.append([possible_team, original_team])
 
 				# REPEATING IDENTICAL PROCESS for the teams in the unviable list.
@@ -500,15 +511,7 @@ class Classroom:
 						possible_team.addMember(student)
 						possible_team.establish_metrics(self.min_acceptable_lang_proficiency, self.min_team_overlapping_langs, \
 										self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor, self.request_factor)
-						print("possible_team: ", str(possible_team))
-						print("original_team: ", str(original_team))
 						possibleTeams.append([possible_team, original_team])
-
-				print("POSSIBLE TEAMS: ", end='')
-				for sublist in possibleTeams:
-					print("sublist[0]: ", sublist[0], end=" ")
-					print("sublist[1]: ", sublist[1])
-				print()
 
 				best_team = possibleTeams[0][0]      # initialize best_team to be first team to consider
 				original_team = possibleTeams[0][1]  # initialize original_team to be corresponding original team
@@ -519,8 +522,6 @@ class Classroom:
 						best_team = potential_best
 						original_team = corresponding_original
 				# now we have the best team for this unassigned student, and a reference to the original version of this team
-				print("BEST TEAM: ", best_team)
-				print("ORIGINAL TEAM: ", original_team)
 				# place this best team and its members in the correct data structures
 				if best_team.is_viable:
 					self.place_good(best_team)
@@ -538,56 +539,12 @@ class Classroom:
 				for member in best_team.member_list:
 					member.assignedTeam = best_team
 
-				print("After assigning ", student, ": ")
-				print("Total number of students = ", len(self.studentList))
-				print("assignedStudents_viable = ", end='')
-				for student in self.assignedStudents_viable:
-					print(student.name, end=", ")
-				print()
-				print("assignedStudents_bad = ", end='')
-				for student in self.assignedStudents_bad:
-					print(student.name, end=", ")
-				print()
-				print("unassigned_students = ", end='')
-				for student in self.unassignedStudents:
-					print(student.name, end=", ")
-				print()
-
-				print("Number of VIABLE (assigned) teams is: ", len(self.assignedTeams_viable))
-				print("Viable team list: ", end='')
-				for team in self.assignedTeams_viable:
-					print(team, end=', ')
-				print()
-				print("Number of BAD (assigned) teams is: ", len(self.assignedTeams_bad))
-				print("Bad team list: ")
-				for team in self.assignedTeams_bad:
-					print(team, end=', ')
-				print()
-
-				print("\nReport of viable teams: ")
-				for team in self.assignedTeams_viable:
-					print("Team ", team.number, "Quality score: ", team.quality_score, ": com_lang =",
-						  team.common_langs, " time_overlap =",
-						  team.time_overlap, " viability =", team.is_viable)
-					for member in team.member_list:
-						print(member.name, end=' ')
-					print()
-
-				print("\nReport of UNviable teams: ")
-				for team in self.assignedTeams_bad:
-					print("Team ", team.number, "Quality score: ", team.quality_score, ": com_lang =",
-						  team.common_langs,
-						  " time_overlap =",
-						  team.time_overlap, " viability =", team.is_viable)
-					for member in team.member_list:
-						print(member.name, end=' ')
-					print()
-
 		# The case where we don't have enough teams to accommodate all unassigned students....
 		# We simply make a team out of the unassigned students, and make one more call to attemptToPlace() to optimize
 		# this random team.
 		else:
-			newteam = Team.Team("all unassigned") #TODO: what should these identifiers be?
+			newteam = Team.Team(self.uniqueID)
+			self.uniqueID += 1
 			for student in self.unassignedStudents:
 				newteam.addMember(student)
 				student.assignedTeam = newteam
@@ -625,7 +582,6 @@ class Classroom:
 		Makes sure the team and all its members are on the "bad" list and
 		are NOT on the "good" list.
 		"""
-		print("\n NOW WE'RE IN PLACE BAD :( ")
 		for student in team.member_list:
 			if student not in self.assignedStudents_bad:
 				self.assignedStudents_bad.append(student)

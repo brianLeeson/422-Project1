@@ -17,21 +17,13 @@ ourclass.sortIntoTeams()
 
 """Amie's Notes to herself:
 TODO:
-- The key for the unviable teams is repeated..?
 - fix direct attribute reference with usage of getters and setters
     why isn't getName working with the __str__ override? (Student class)
-- request consideration (up quality score?) (student.requests)
 - Clean up printing
 
 *IDEAS*:
 What if we start by grabbing teams that have closer-to-average quality scores?
 so that we don't make any unbreakable teams by the random swap method....
-
-Handling the case of a student(s) who aren't viable on ANY teams... Or is this already taken care of by default?
-(Do we want any special messages or handling?)
-
-That weird bug where we lost a team......?
-
 
 
 BRIAN:
