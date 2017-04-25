@@ -88,14 +88,21 @@ def export(decided_teams):
 	output-> None, writing the file is a side effect
 	"""
 	with open('team_decisions.csv', 'w') as csvfile:
-		fieldnames = ['Team Number', 'Student 1', 'Student 2', 'Student 3']
+		fieldnames = ['Team Number', 'Student 1', 'Student 2', 'Student 3', 'Student 4']
 		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 		writer.writeheader()
 		i = 1
 		for team in decided_teams:
-			# TODO print team's UID, not just a random number
+			# TODO print team's UID, not just a random number #TODO WRITE ROW FOR A FOURTH STUDENT
 			teammates = team.getMemberList()
-			writer.writerow({'Team Number': i, 'Student 1': teammates[0], 'Student 2': teammates[1], 'Student 3': teammates[2]})
+			entry = {'Team Number': i, 'Student 1': teammates[0]}
+			if len(teammates) >= 2:
+				entry['Student 2']= teammates[1]
+				if len(teammates) >= 3:
+					entry['Student 3']= teammates[2]
+					if len(teammates) >= 4:
+						entry['Student 4']= teammates[3]
+			writer.writerow(entry)
 			i += 1
 	
 	return None
@@ -114,5 +121,5 @@ if __name__ == '__main__':
 	team2 = Team(2)
 	team2.setMemberList(stu_li[3:6])
 	team3 = Team(3)
-	team3.setMemberList(stu_li[6:9])
+	team3.setMemberList(stu_li[6:10])
 	export([team1, team2, team3])

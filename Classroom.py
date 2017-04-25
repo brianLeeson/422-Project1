@@ -546,4 +546,5 @@ if __name__ == '__main__':
 	cs = Classroom('S17', 'Michal Young')
 	students = [1, 2, 3, 'a', '4']
 	cs.setStudentList(students)
-	print(cs.classroomSize())
+	#print(cs.classroomSize())
+	team = Team.Team(6)
