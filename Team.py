@@ -27,7 +27,7 @@ class Team:
 		self.is_viable = False
 
 	def __str__(self):
-		return self.number
+		return str(self.number)
 
 	def __lt__(self, other):
 		return self.quality_score < other.quality_score
@@ -97,17 +97,24 @@ class Team:
 				self.is_viable = True
 		return None
 
-	def calc_quality_score(self, schedule_factor, langs_factor):
+	def calc_quality_score(self, schedule_factor, langs_factor, request_factor):
 		""" Calculates overall quality score based on schedule overlap, language overlap.
 		Returns integer score value.  Called by establish_metrics()."""
-
+		quality_score = 0
+		# Take into account reqest overlaps
+		for student in self.member_list:
+			for request in student.getRequests():
+				for member in self.member_list:
+					if member.getduckID() == request:
+						quality_score += request_factor
+		quality_score += ((self.time_overlap * schedule_factor) + (self.num_common_langs * langs_factor))
 		# note that prototype weighs time_overlap by factor of 2.  Does not currently include weighting of requests.
 		# This is arbitrary and should be determined for final MVP, or parameterize for user by input.
-		self.quality_score = (self.time_overlap * schedule_factor) + (self.num_common_langs * langs_factor)
+		self.quality_score = quality_score
 		return None
 
 	def establish_metrics(self, min_acceptable_lang_proficiency, min_team_overlapping_langs,\
-	 								min_team_overlapping_timeslots, schedule_factor, langs_factor):
+	 								min_team_overlapping_timeslots, schedule_factor, langs_factor, request_factor):
 		"""Wrapper function for setting up new team.
 		Calculates and populates member variables:
 		self.num_common_langs
@@ -118,7 +125,7 @@ class Team:
 		self.calc_common_lang(min_acceptable_lang_proficiency)
 		self.calc_time_overlap()
 		self.calc_viability(min_team_overlapping_langs, min_team_overlapping_timeslots)
-		self.calc_quality_score(schedule_factor, langs_factor)
+		self.calc_quality_score(schedule_factor, langs_factor, request_factor)
 		return None
 
 	def getNumber(self):

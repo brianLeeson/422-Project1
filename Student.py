@@ -74,6 +74,13 @@ class Student:
 		self.duckID = duckID
 		return None
 
+	def setRequests(self, requests):
+		self.requests = requests
+		return None
+
+	def getRequests(self):
+		return self.requests
+
 	def getOverallExperience(self):
 		return self.overallExperience
 

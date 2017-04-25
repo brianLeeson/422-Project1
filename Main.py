@@ -9,8 +9,8 @@ ourclass = Classroom.Classroom("S17", "Michal Young")
 ourclass.setCSV("fake_422_data.csv")
 ourclass.setStudentList(fileProcess.process(ourclass.getCSV()))
 
-#for student in ourclass.studentList:
-#    print(student.name, ": ", student.availability)
+for student in ourclass.studentList:
+    print("Request list of: ", student.name, "= ", student.requests)
 
 
 ourclass.sortIntoTeams()
@@ -18,9 +18,6 @@ ourclass.sortIntoTeams()
 """Amie's Notes to herself:
 TODO:
 - The key for the unviable teams is repeated..?
-- teamsize bug - we can only handleUnassigned if we have enough teams.
- add logic to check for this.  IF we have to make a straggler garbage team, we could repeat "attemptToPlace()"
-- TEST CASES!
 - fix direct attribute reference with usage of getters and setters
     why isn't getName working with the __str__ override? (Student class)
 - request consideration (up quality score?) (student.requests)
