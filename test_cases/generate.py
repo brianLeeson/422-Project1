@@ -86,12 +86,12 @@ def generate_no_pairings():
 
 # ------------------------------------------------------------
 if __name__ == '__main__':
-	generate_students(38, 'too_big.csv')
-	generate_students(2, 'too_small.csv')
-	generate_students(9, 'one_extra.csv')
-	generate_students(20, 'two_extra.csv')
-	generate_students(4, 'odd_one_out.csv')
-	generate_no_pairings()
+	generate_students(90, 'too_big.csv')
+	#generate_students(2, 'too_small.csv')
+	#generate_students(10, 'one_extra.csv')
+	#generate_students(20, 'two_extra.csv')
+	#generate_students(4, 'odd_one_out.csv')
+	#generate_no_pairings()
 
 
 

@@ -85,11 +85,8 @@ def display():
 	tCount = 0
 	row = 0
 	col = 0
-<<<<<<< HEAD
-=======
 	for team in CLASSROOM.getTeamList():
 		teamText = "TeamID: " + str(team.getNumber()) + "\n"
->>>>>>> c96ee800f47900d00896b4c80c0988310e4cd093
 		for student in team.getMemberList():
 			teamText += student.getName() + "\n"
 		teamText += "Quality score: " + str(team.quality_score)
