@@ -24,13 +24,6 @@ TODO:
 - fix direct attribute reference with usage of getters and setters
     why isn't getName working with the __str__ override? (Student class)
 - request consideration (up quality score?) (student.requests)
-- useage of weights for sorting criteria
-        How do we allow the user to populate the weights?
-        Maybe we allow them to specify minimum acceptable skill in a language / minimum hours in common for a team.
-        And then the weights are specified by the user ranking the relative importance of each criteria.
-        What is our final decision on what it means to have a good team?
-        i.e. What is the minimum viable overlap? Is this something that should be specifiable by user?
-
 - Clean up printing
 
 *IDEAS*:

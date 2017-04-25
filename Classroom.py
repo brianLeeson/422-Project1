@@ -41,6 +41,15 @@ class Classroom:
 
 		self.sortingSuccess = False
 
+		# Arbitrary attributes for defining team viability and quality.
+		# Parameterized to allow easy adjustment, and potentially input from the user in the future.
+		self.min_acceptable_lang_proficiency = 2
+		self.min_team_overlapping_langs = 1
+		self.min_team_overlapping_timeslots = 3
+		self.schedule_factor = 1
+		self.langs_factor = 2
+
+
 	def __str__(self):
 		return self.teacher + " " + str(self.section)
 
@@ -116,7 +125,8 @@ class Classroom:
 			for student in self.studentList:
 				the_team.addMember(student)
 				student.assignedTeam = the_team
-			the_team.establish_metrics()
+			the_team.establish_metrics(self.min_acceptable_lang_proficiency, self.min_team_overlapping_langs,\
+									   self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor)
 			if the_team.is_viable:
 				self.assignedTeams_viable.append(the_team)
 			else:
@@ -187,7 +197,8 @@ class Classroom:
 						newteam.addMember(s1)
 						newteam.addMember(s2)
 						newteam.addMember(s3)
-						newteam.establish_metrics()
+						newteam.establish_metrics(self.min_acceptable_lang_proficiency, self.min_team_overlapping_langs,\
+									   self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor)
 						if newteam.is_viable:
 							print("Team ", teamID, ": com_lang =", newteam.common_langs, " time_overlap =",
 								  newteam.time_overlap, " viability =", newteam.is_viable)
@@ -223,7 +234,8 @@ class Classroom:
 			new_team = Team.Team(teamID)
 			for student in member_list:
 				new_team.addMember(student)
-			new_team.establish_metrics()
+			new_team.establish_metrics(self.min_acceptable_lang_proficiency, self.min_team_overlapping_langs,\
+									   self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor)
 			if new_team.is_viable:
 				print("Team ", teamID, ": com_lang =", new_team.common_langs, " time_overlap =",
 					  new_team.time_overlap, " viability =", new_team.is_viable)
@@ -309,7 +321,8 @@ class Classroom:
 				self.assignedStudents_bad.append(self.unassignedStudents.pop(0))
 
 			self.assignedTeams_bad.append(newteam)
-			newteam.establish_metrics()
+			newteam.establish_metrics(self.min_acceptable_lang_proficiency, self.min_team_overlapping_langs,\
+									   self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor)
 			newID += 1
 
 
@@ -407,8 +420,10 @@ class Classroom:
 
 				self.swapTwoStudents(bad_student, swapee)
 
-				bad_team.establish_metrics()
-				good_team.establish_metrics()
+				bad_team.establish_metrics(self.min_acceptable_lang_proficiency, self.min_team_overlapping_langs,\
+									   self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor)
+				good_team.establish_metrics(self.min_acceptable_lang_proficiency, self.min_team_overlapping_langs,\
+									   self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor)
 				new_total_quality = bad_team.quality_score + good_team.quality_score
 
 				# case where both teams become viable - we want to keep this always
@@ -430,8 +445,10 @@ class Classroom:
 					# swap the students back and nothing else should have to change
 					self.swapTwoStudents(swapee, bad_student)
 					# don't forget to recalculate the values for the respective teams
-					bad_team.establish_metrics()
-					good_team.establish_metrics()
+					bad_team.establish_metrics(self.min_acceptable_lang_proficiency, self.min_team_overlapping_langs,\
+									   self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor)
+					good_team.establish_metrics(self.min_acceptable_lang_proficiency, self.min_team_overlapping_langs,\
+									   self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor)
 				i += 1
 			else:
 				continue
@@ -456,7 +473,8 @@ class Classroom:
 					original_team = team
 					possible_team = copy.deepcopy(team) #deepcopy instead of copy is necessary. Why?
 					possible_team.addMember(student)
-					possible_team.establish_metrics()
+					possible_team.establish_metrics(self.min_acceptable_lang_proficiency, self.min_team_overlapping_langs,\
+									   self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor)
 					possibleTeams.append([possible_team, original_team])
 
 			best_team = possibleTeams[0][0]

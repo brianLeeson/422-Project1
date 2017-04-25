@@ -47,7 +47,7 @@ class Team:
 	def __ne__(self, other):
 		return self.number != other.number
 
-	def calc_common_lang(self):
+	def calc_common_lang(self, min_acceptable_lang_proficiency):
 		""" Compares language overlap among team members.
 		Populates member list of common languages (self.common_langs).
 		Sets member variable num_common_langs.
@@ -59,9 +59,9 @@ class Team:
 		for language in languagelist:
 			speakers = 0
 			for student in self.member_list:
-				if student.getCodeExperience()[language] >= 3: # ARBITRARY (parameterize?)
+				if student.getCodeExperience()[language] >= min_acceptable_lang_proficiency:
 					speakers += 1
-			if speakers == 3:
+			if speakers == len(self.member_list):
 				self.common_langs.append(language)
 		self.num_common_langs = len(self.common_langs)
 		return None
@@ -88,25 +88,26 @@ class Team:
 		self.time_overlap = overlap
 		return None
 
-	def calc_viability(self):
+	def calc_viability(self, min_team_overlapping_langs, min_team_overlapping_timeslots):
 		""" Determines whether team meets minimum viability requirements.
 		Sets member variable is_viable to True/False accordingly. Called by establish_metrics()."""
 		self.is_viable = False  # RESET in case we were re-calculating a pre-existing team
-		if self.num_common_langs >= 1: # ARBITRARY (parameterize?)
-			if self.time_overlap >= 3: # ARBITRARY (parameterize?)
+		if self.num_common_langs >= min_team_overlapping_langs:
+			if self.time_overlap >= min_team_overlapping_timeslots:
 				self.is_viable = True
 		return None
 
-	def calc_quality_score(self):
+	def calc_quality_score(self, schedule_factor, langs_factor):
 		""" Calculates overall quality score based on schedule overlap, language overlap.
 		Returns integer score value.  Called by establish_metrics()."""
 
 		# note that prototype weighs time_overlap by factor of 2.  Does not currently include weighting of requests.
 		# This is arbitrary and should be determined for final MVP, or parameterize for user by input.
-		self.quality_score = self.time_overlap + 2*self.num_common_langs
+		self.quality_score = (self.time_overlap * schedule_factor) + (self.num_common_langs * langs_factor)
 		return None
 
-	def establish_metrics(self):
+	def establish_metrics(self, min_acceptable_lang_proficiency, min_team_overlapping_langs,\
+	 								min_team_overlapping_timeslots, schedule_factor, langs_factor):
 		"""Wrapper function for setting up new team.
 		Calculates and populates member variables:
 		self.num_common_langs
@@ -114,10 +115,10 @@ class Team:
 		self.time_overlap
 		self.quality_score
 		self.is_viable"""
-		self.calc_common_lang()
+		self.calc_common_lang(min_acceptable_lang_proficiency)
 		self.calc_time_overlap()
-		self.calc_viability()
-		self.calc_quality_score()
+		self.calc_viability(min_team_overlapping_langs, min_team_overlapping_timeslots)
+		self.calc_quality_score(schedule_factor, langs_factor)
 		return None
 
 	def getNumber(self):
