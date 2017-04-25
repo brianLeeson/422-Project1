@@ -1,6 +1,12 @@
 """
 Author(s): Brian Leeson + Jamie Zimmerman + Amie Corso
 
+class Classroom:
+A Classroom object is instantiated upon import of a CSV file containing survey data.
+Contains list of Student objects, representing the students in the class, and list of Team objects, representing
+the final teams.
+Contains umbrella sorting method "sortIntoTeams()" and all necessary auxiliary functions for creating teams out of
+the student data.  Called when "Sort" button is pressed in the GUI.
 """
 import Team
 import random
@@ -14,8 +20,8 @@ class Classroom:
 		self.section = section  # 'W17', 'S17', etc.
 		self.teacher = teacher  # 'Michal Young', etc.
 
-		self.csv_file = ''  # the csv file containing all survey responses for this class
-		self.studentList = []  # list of Student objects
+		self.csv_file = ''  # the CSV file containing all survey responses for this class
+		self.studentList = []  # list of Student objects, populated upon import of CSV
 		self.teamList = []  # list OFFICIAL list of Team objects (populated by sortIntoTeams())
 
 		# These attributes are used during the sorting process (manage students)
@@ -31,7 +37,7 @@ class Classroom:
 		# TODO Is this how we want our weights to look?
 		# We could break them out into individual attributes
 		self.weights = []  # currently unused
-		self.teamSize = 4  # 4 by default
+		self.teamSize = 4  # 4 by default #TODO: require user specification?
 
 		self.sortingSuccess = False
 
@@ -87,13 +93,14 @@ class Classroom:
 		"""
 		Sorts the student class list (self.studentList) into teams of (self.teamSize) and populates
 		member list self.officialTeamList with final selections.
+		Returns None.
 
 		Calls:
-		generateAllTeams()
+		generateAllTeams_itertools()
 		sortStudentList()
 		getSeedTeams()
 		attemptToPlace()
-		....
+		handleUnassigned()
 
 		"""
 
@@ -166,9 +173,10 @@ class Classroom:
 			print()
 
 		return None
-
+	"""
+# Function has been replaced with version using Python's itertools module.
 	def generateAllTeams(self):
-		""" Populates member list allViableTeams with all viable teams of 3."""
+		#Populates member list allViableTeams with all viable teams of 3.
 		print("\n\nRUNNING GENERATE_ALL_TEAMS()\n")
 		teamID = 0
 		for s1 in self.studentList:
@@ -200,10 +208,14 @@ class Classroom:
 		print("length of team list: ", len(self.allViableTeams))
 		print()
 		return None
+"""
+
 
 	def generateAllTeams_itertools(self):
-		""" Attempting version of generateAllTeams that uses Python's itertools module to create team combinations,
-		which would allow us to implement variable teamsizes"""
+		""" Uses Python's itertools module to generate all possible team combinations of size teamSize.
+		Establishes team metrics and assesses viability of each team, appending all viable teams to
+		self.allViableTeams.  Returns None."""
+
 		student_permutations = itertools.combinations(self.studentList, self.teamSize)
 
 		teamID = 0
@@ -234,8 +246,8 @@ class Classroom:
 	def sortStudentList(self):
 		"""For each student in the studentList, sorts their list of potential teams in order of
 		decreasing quality score.  Then sorts studentList in order of increasing number of potential teams.
-		This is achieved by overwritten rich comparison methods.
-		Returns None."""
+		This is achieved by overwritten rich comparison methods.  Returns None."""
+
 		print("\n\nRUNNING SORT_STUDENT_LIST\n")
 		for student in self.studentList:
 			student.sort_potential_teams()
@@ -337,14 +349,12 @@ class Classroom:
 	def attemptToPlace(self):
 		"""
 		This function tries to assign students who are on unviable teams to viable ones via randomized hill-climbing approach.
+		Chooses a random student who is on a bad team and attempts to swap them with another random student.
+		Keeps the result of the swap only if a previously unviable team was made viable, or if at least one team remains viable
+		and the overall quality score (sum of both teams considered) increases.
 		"""
-		# choose a random student who's on a bad team
-		# attempt to swap them with another random student (or should this be methodical?)
-		# if the resulting (total) viability score is better
-		# and at least one team is still viable, then keep the swap
-		# otherwise, swap back and choose again
 		print("\n\nRUNNING ATTEMPT_TO_PLACE...\n")
-		print("but first, where we attttttt")
+		print("but first, what do things look like?:")
 		print("Total number of students = ", len(self.studentList))
 		print("assignedStudents_viable = ", end='')
 		for student in self.assignedStudents_viable:
@@ -381,7 +391,7 @@ class Classroom:
 
 
 		i = 0 # counter to ensure our while loop is not infinite
-		while (len(self.assignedTeams_bad) > 0 and i < 100000): # note that this is potentially infinite
+		while (len(self.assignedTeams_bad) > 0 and i < 100000): # We can stop when all teams are viable or we've performed this 100000 times
 			bad_student_index = random.randint(0, len(self.assignedStudents_bad) - 1)
 			swapee_index = random.randint(0, len(self.studentList) - 1)
 			bad_student = self.assignedStudents_bad[bad_student_index]
@@ -429,7 +439,12 @@ class Classroom:
 
 	def handleUnassigned(self):
 		""" Places any remaining unassigned students onto the best possible of the currently existing teams.
-		IDEA:  Should the make sure that the unassigned students are the most available?"""
+		Does not allow teams to have more than teamSize + 1 members.
+
+		NOTE: the following not yet implemented:
+		If there are not enough teams to accommodate all unassigned students, no placement occurs and a team is simply created
+		from the unassigned students.  AttemptToPlace() is called again to attempt to optimize this random team. Returns None.
+		"""
 
 		print("RUNNING HANDLE_UNASSIGNED: ")
 		while len(self.unassignedStudents) > 0:
@@ -439,7 +454,7 @@ class Classroom:
 			for team in self.assignedTeams_viable: # we will only try to use previously viable teams to accommodate the unassigned students
 				if len(team.member_list) < (self.teamSize + 1): # we don't want to include teams that already have an extra member
 					original_team = team
-					possible_team = copy.deepcopy(team) # this solved the problem of having multiple amies, but why?
+					possible_team = copy.deepcopy(team) #deepcopy instead of copy is necessary. Why?
 					possible_team.addMember(student)
 					possible_team.establish_metrics()
 					possibleTeams.append([possible_team, original_team])
@@ -478,9 +493,9 @@ class Classroom:
 
 	def place_good(self, team):
 		"""
-		Auxiliary func
+		Auxiliary function, called by attemptToPlace().
 		Make sure the team and all its members are on the "good" list and
-		NOT on the "bad list.
+		are NOT on the "bad" list.
 		"""
 		for student in team.member_list:
 			if student not in self.assignedStudents_viable:
@@ -496,9 +511,9 @@ class Classroom:
 
 	def place_bad(self, team):
 		"""
-		Auxiliary func
-		Make sure the team and all its members are on the "bad" list and
-		NOT on the "good" list.
+		Auxiliary function, called by attemptToPlace().
+		Makes sure the team and all its members are on the "bad" list and
+		are NOT on the "good" list.
 		"""
 		for student in team.member_list:
 			if student not in self.assignedStudents_bad:
@@ -514,8 +529,8 @@ class Classroom:
 
 	def swapTwoStudents(self, student1, student2):
 		"""
-		Auxiliary func
-		swap the membership of student 1 with student 2
+		Auxiliary function, called by attemptToPlace().
+		Swaps the team membership of student1 and student2.
 		"""
 
 		student1.assignedTeam.member_list.remove(student1)
