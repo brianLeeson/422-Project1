@@ -1,6 +1,11 @@
 """
 Author(s): Jamie Zimmerman + Amie Corso
 
+class Team:
+Team objects contain collections of Student objects.
+Team attributes are used to keep track of members, as well as store information about the quality and viability of the team.
+Methods calculate and populate these attributes based on the characterists of the member Student objects.
+Note overwritten rich comparison methods.
 """
 
 from Student import Student  # from the module, import the class
@@ -42,15 +47,18 @@ class Team:
 		return self.number != other.number
 
 	def calc_common_lang(self):
-		""" Compare language overlap among team members.
+		""" Compares language overlap among team members.
 		Populates member list of common languages (self.common_langs).
-		Sets member variable num_common_langs."""
-		self.common_langs = []  # RESET the language list in case we are updating an pre-calculated team
+		Sets member variable num_common_langs.
+		A language is considered overlapping if all members have a self-reported proficiency of at least 3.
+		Called by establish_metrics().
+		"""
+		self.common_langs = []  # RESET the language list in case we are updating a pre-calculated team
 		languagelist = ['Python', 'Java', 'Javascript', 'C', 'C++', 'PHP', 'HTML', 'SQL', 'Bash/Unix']
 		for language in languagelist:
 			speakers = 0
 			for student in self.member_list:
-				if student.getCodeExperience()[language] >= 3:
+				if student.getCodeExperience()[language] >= 3: # ARBITRARY (parameterize?)
 					speakers += 1
 			if speakers == 3:
 				self.common_langs.append(language)
@@ -58,8 +66,10 @@ class Team:
 		return None
 
 	def calc_time_overlap(self):
-		""" Compare schedules among team members.
-		Calculates total time overlaps and sets self.time_overlap."""
+		""" Compares schedules among team members.
+		Calculates total time overlaps and sets self.time_overlap, the number of overlapping timeslots among teammembers.
+		A timeslot is considered overlapping if all members of the team have indicated availability. Called by establish_metrics().
+		"""
 		overlap = 0
 		dayslist = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 		for day in dayslist:
@@ -79,23 +89,30 @@ class Team:
 
 	def calc_viability(self):
 		""" Determines whether team meets minimum viability requirements.
-		and returns True / False accordingly."""
+		Sets member variable is_viable to True/False accordingly. Called by establish_metrics()."""
 		self.is_viable = False  # RESET in case we were re-calculating a pre-existing team
-		if self.num_common_langs >= 1:
-			if self.time_overlap >= 3:
+		if self.num_common_langs >= 1: # ARBITRARY (parameterize?)
+			if self.time_overlap >= 3: # ARBITRARY (parameterize?)
 				self.is_viable = True
 		return None
 
 	def calc_quality_score(self):
 		""" Calculates overall quality score based on schedule overlap, language overlap.
-		Returns integer score value."""
+		Returns integer score value.  Called by establish_metrics()."""
 
-		# note that prototype weighs time_overlap by factor of 2
+		# note that prototype weighs time_overlap by factor of 2.  Does not currently include weighting of requests.
+		# This is arbitrary and should be determined for final MVP, or parameterize for user by input.
 		self.quality_score = self.time_overlap + 2*self.num_common_langs
 		return None
 
 	def establish_metrics(self):
-		"""Wrapper function for setting up new team."""
+		"""Wrapper function for setting up new team.
+		Calculates and populates member variables:
+		self.num_common_langs
+		self.common_langs
+		self.time_overlap
+		self.quality_score
+		self.is_viable"""
 		self.calc_common_lang()
 		self.calc_time_overlap()
 		self.calc_viability()
