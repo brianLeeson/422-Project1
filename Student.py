@@ -45,8 +45,6 @@ class Student:
 		return None
 
 	def __str__(self):
-		# TODO fix this usage - throws a type error because it can't print int type (from UID)
-		# example, when you call print(student)
 		return self.getName()
 
 	def __cmp__(self, other):
@@ -83,6 +81,13 @@ class Student:
 	def setduckID(self, duckID):
 		self.duckID = duckID
 		return None
+
+	def setRequests(self, requests):
+		self.requests = requests
+		return None
+
+	def getRequests(self):
+		return self.requests
 
 	def getCodeExperience(self):
 		'''

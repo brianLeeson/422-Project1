@@ -43,10 +43,12 @@ def sortCB():
 		global CLASSROOM
 		global PATH
 
+		size = int(numStudentSpin.get())
+		inRange = (2 <= size) and (size <= 5)
+
 		# if a path to a survey csv exists
-		if len(PATH):
+		if len(PATH) and inRange:
 			# Get Field Values
-			size = int(numStudentSpin.get())
 			name = nameEntry.get()
 			crn = crnEntry.get()
 
@@ -144,7 +146,7 @@ numStudentFrame.grid(row=2, column=0, columnspan=3)
 numStudentLabel = tk.Label(numStudentFrame, text="Group Size: ")
 numStudentLabel.grid(row=0, column=0)
 
-numStudentSpin = tk.Spinbox(numStudentFrame, from_=3, to=5)
+numStudentSpin = tk.Spinbox(numStudentFrame, from_=2, to=5)
 numStudentSpin.delete(0, 2)
 numStudentSpin.insert(0, 3)
 numStudentSpin.grid(row=0, column=1)
@@ -154,7 +156,7 @@ description = tk.Frame(mainFrame, bd=1)
 description.grid(row=3, column=0, columnspan=3)
 
 descriptionText = "Surveys in csv form can be imported, sorted into teams and" \
-					" exported as a csv for further changes if needed."
+					" exported as a csv to the cwd for further changes if needed."
 descriptionLabel = tk.Label(description, text=descriptionText, wraplength=200)
 descriptionLabel.grid(row=0, column=0)
 
@@ -177,3 +179,4 @@ canvasFrame.grid(row=0, column=3, rowspan=5)
 
 # runs the app
 app.mainloop()
+

@@ -46,7 +46,7 @@ def process(fileName):
 				#print('{} for tool {} has skill {}'.format(student.getName(), languages[i], row[survey_headers[i]]))
 
 			student.setAvailability(create_time_chart([mon, tues, wed, thurs, fri]))
-			student.setTeammates(requests)
+			student.setRequests(requests) # It's ok that this is just a list of duckIDs and not student objects
 
 			studentList.append(student)
 

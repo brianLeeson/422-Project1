@@ -9,31 +9,27 @@ ourclass = Classroom.Classroom("S17", "Michal Young")
 ourclass.setCSV("fake_422_data.csv")
 ourclass.setStudentList(fileProcess.process(ourclass.getCSV()))
 
-#for student in ourclass.studentList:
-#    print(student.name, ": ", student.availability)
-
+for student in ourclass.studentList:
+    print("Request list of: ", student, "= ", student.requests)
 
 ourclass.sortIntoTeams()
 
 """Amie's Notes to herself:
 TODO:
-- The key for the unviable teams is repeated..?
-- teamsize bug - we can only handleUnassigned if we have enough teams.
- add logic to check for this.  IF we have to make a straggler garbage team, we could repeat "attemptToPlace()"
-- TEST CASES!
 - fix direct attribute reference with usage of getters and setters
     why isn't getName working with the __str__ override? (Student class)
-- request consideration (up quality score?) (student.requests)
 - Clean up printing
+- Comments and such
 
 *IDEAS*:
-What if we start by grabbing teams that have closer-to-average quality scores?
-so that we don't make any unbreakable teams by the random swap method....
+What if we start by grabbing teams that have median quality_scores, so that we don't create any unbreakable teams during the
+randomization process?
 
-Handling the case of a student(s) who aren't viable on ANY teams... Or is this already taken care of by default?
-(Do we want any special messages or handling?)
+What if we saved each iteration of the sorting process and grabbed the one that was overall best?
 
-That weird bug where we lost a team......?
+Other ideas:
+Could we display a "sorting....." message on the GUI while the sort is in progress?
+The output should display viability (or lackthereof) of the teams that were generated
 
 
 
@@ -57,12 +53,7 @@ JAMIE:
         overlapping languages
         overlapped schedule (this would need be generated)
         quality score
-
-- seems that the export isn't including team+1th members
-
-AMIE:
--  algorithm notes above
-- cleaner, more descriptive comments/docstrings
-- fix what Jamie manages to break
+        whether a team is viable or not
+        the team+1th members
 
 """
