@@ -10,8 +10,7 @@ ourclass.setCSV("fake_422_data.csv")
 ourclass.setStudentList(fileProcess.process(ourclass.getCSV()))
 
 for student in ourclass.studentList:
-    print("Request list of: ", student.name, "= ", student.requests)
-
+    print("Request list of: ", student, "= ", student.requests)
 
 ourclass.sortIntoTeams()
 
@@ -20,10 +19,18 @@ TODO:
 - fix direct attribute reference with usage of getters and setters
     why isn't getName working with the __str__ override? (Student class)
 - Clean up printing
+- Comments and such
 
 *IDEAS*:
-What if we start by grabbing teams that have closer-to-average quality scores?
-so that we don't make any unbreakable teams by the random swap method....
+What if we start by grabbing teams that have median quality_scores, so that we don't create any unbreakable teams during the
+randomization process?
+
+What if we saved each iteration of the sorting process and grabbed the one that was overall best?
+
+Other ideas:
+Could we display a "sorting....." message on the GUI while the sort is in progress?
+The output should display viability (or lackthereof) of the teams that were generated
+
 
 
 BRIAN:
@@ -46,12 +53,7 @@ JAMIE:
         overlapping languages
         overlapped schedule (this would need be generated)
         quality score
-
-- seems that the export isn't including team+1th members
-
-AMIE:
--  algorithm notes above
-- cleaner, more descriptive comments/docstrings
-- fix what Jamie manages to break
+        whether a team is viable or not
+        the team+1th members
 
 """

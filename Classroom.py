@@ -44,7 +44,7 @@ class Classroom:
 		# Parameterized to allow easy adjustment, and potentially input from the user in the future.
 		self.min_acceptable_lang_proficiency = 3 # self-reported proficiency of (min_acceptable_lang_proficiency)\
 												 #  (scale of 1 -5) or greater means language could be used
-		self.min_team_overlapping_langs = 2   # teams need at least (min_team_overlapping_langs) language in common
+		self.min_team_overlapping_langs = 1   # teams need at least (min_team_overlapping_langs) language in common
 		self.min_team_overlapping_timeslots = 2  # at least (2 * min_team_overlapping_timeslots) mutual hours per week necessary
 		self.schedule_factor = 1 # (schedule_factor * team.num_overlapping_timeslots) is added to team quality score
 		self.langs_factor = 2   # (langs_factor * team.num_overlapping_langs) is added to quality score
@@ -303,17 +303,6 @@ class Classroom:
 			newteam.establish_metrics(self.min_acceptable_lang_proficiency, self.min_team_overlapping_langs,\
 					  self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor, self.request_factor)
 
-
-		"""
-		Now we have several items:
-		assignedStudents_viable
-		assignedStudents_bad
-		unassignedStudents (which should have length studentList % teamSize)
-
-		self.assignedTeams_viable
-		self.assignedTeams_bad
-
-		"""
 
 		print("\n\nAfter randomly assigning the stragglers: ")
 		print("length self.assignedStudents_viable = ", len(self.assignedStudents_viable))
