@@ -39,4 +39,9 @@ To run the application:
  This application does not have a command line interface and by consequence cannot be run 
  by ssh-ing into a system, including ix
  
- 
+ ### Platforms:
+This application has successfully been run on the following platforms:
+ * macOS 10.12 ~ Python 3.5
+ * Ubuntu ~ Python 3.5 (whichever Brian's machine is) 
+ * macOS (whichever Amie has)
+ * this program successfully runs when logged in to Desktop machines in Deschutes 100 - the OS must have a Desktop to run!
