@@ -177,3 +177,7 @@ canvasFrame.grid(row=0, column=3, rowspan=5)
 
 # runs the app
 app.mainloop()
+
+
+if __name__ == '__main__':
+    

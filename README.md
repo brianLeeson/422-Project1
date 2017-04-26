@@ -35,4 +35,8 @@ To run the application:
  * sort students into teams
  * optionally export sorted teams to csv for review.
  
+ ### Issues:
+ This application does not have a command line interface and by consequence cannot be run 
+ by ssh-ing into a system, including ix
+ 
  
