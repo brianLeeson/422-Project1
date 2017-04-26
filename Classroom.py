@@ -34,7 +34,6 @@ class Classroom:
 		self.assignedTeams_viable = []
 		self.assignedTeams_bad = []
 
-		# TODO Is this how we want our weights to look?
 		# We could break them out into individual attributes
 		self.weights = []  # currently unused
 		self.teamSize = 4  # 4 by default #TODO: require user specification?
@@ -184,6 +183,8 @@ class Classroom:
 
 		return None
 	"""
+
+# -------------------- DEPRECATED FUNCTION ----------------------------------#
 # Function has been replaced with version using Python's itertools module.
 	def generateAllTeams(self):
 		#Populates member list allViableTeams with all viable teams of 3.
@@ -560,6 +561,7 @@ class Classroom:
 		student2.assignedTeam = tempteam
 		return None
 # -------------------------------------------- Sandbox Area --------------------------------------#
+# This code was used for testing purposes during inital development. It does not need to be saved. 
 if __name__ == '__main__':
 	cs = Classroom('S17', 'Michal Young')
 	students = [1, 2, 3, 'a', '4']
