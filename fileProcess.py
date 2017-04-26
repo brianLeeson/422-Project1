@@ -1,6 +1,12 @@
 """
 Author(s): Jamie Zimmerman
 
+This module is responsible for the intake of survey data and export of optimal team decisions.
+
+process method intakes a csv file. No active other part of our program is currently responsible for collecting that data besides a Google survey that is provided in the repo for the user when they download and install our app. It is critical that the teacher use the Google Survey provided as the headers in it are hard-coded in this module. Using the csv library, the process method reads the appropriate data and instantiates the necessary objects. Each row in the survey results is one student's answers, so for each row we instantiate a Student object.
+
+export method gets a list of final team objects and writes them to a csv file, provided for the teacher's use. Each row is a Team, and it lists not only the students in it but each student's meeting time/coding experience and the team's matching qualities. By providing more granular information, the teacher can look realistically at the teams and then personally make changes to Teams as he/she deems fit. The algorithm performs well, but can't read the mind of the teacher. For example if the teacher knows that certain students despise each other, then he/she can manually check if they are on a team, and if so, make changes, with more granular information on hand.
+
 """
 
 from Student import Student  # from module import class
@@ -14,6 +20,7 @@ def process(fileName):
 	reads the file using csv dictionary reader
 	takes the information from each row (which represents a student)
 	and creates a student object
+	output -> a list of student Objects, which can then be attached to the Classroom instance.
 	"""
 	studentList = []
 	with open(fileName, "r") as csvfile:
@@ -28,18 +35,19 @@ def process(fileName):
 			wed = row['Wednesday']
 			thurs = row['Thursday']
 			fri = row['Friday']
+
 			#get student's requested groupmates
 			requests = row["Desired Teammates DuckIDs (separated by ';')"].split(';')
+
 			#create a student object
 			student = Student(row['Student Name'], row['Your DuckID'])
-			for i in range(9):  # TODO more elegant design
+			for i in range(9):  # the provided survey lists the 9 major languages most applicable/favorable to a group of upperdiv CS students
 				student.setCodeExperience(languages[i], int(row[survey_headers[i]]))
 				#print('{} for tool {} has skill {}'.format(student.getName(), languages[i], row[survey_headers[i]]))
 
 			student.setAvailability(create_time_chart([mon, tues, wed, thurs, fri]))
 			student.setTeammates(requests)
 
-			# TODO figure out how to create student objects from request list - these need to be added to the students teammate list
 			studentList.append(student)
 
 	return studentList
@@ -82,7 +90,6 @@ def create_time_chart(day_availability_list):
 
 def export(decided_teams):
 	"""
-	THIS FUNCTION ASSUMES THAT THE INPUT IS A LIST OF TEAM OBJECTS***
 	input-> list of Team objects
 	function writes teams as a csv to cwd
 	output-> None, writing the file is a side effect
@@ -93,7 +100,6 @@ def export(decided_teams):
 		writer.writeheader()
 		i = 1
 		for team in decided_teams:
-			# TODO print team's UID, not just a random number #TODO WRITE ROW FOR A FOURTH STUDENT
 			teammates = team.getMemberList()
 			entry = {'Team Number': i, 'Student 1': teammates[0]}
 			if len(teammates) >= 2:
