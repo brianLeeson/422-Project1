@@ -33,6 +33,7 @@ class Student:
 					'Wednesday': [],
 					'Thursday': [],
 					'Friday': []}
+		self.time_list = [] #non-binary representation of available time, each entry is a string of the day and hours available
 		self.requests = []  # list of strings - duckIDs of desired teammates
 		self.potential_teams = [] # used during sorting process to keep track of which teams on which a student COULD appear
 		self.assignedTeam = None  # keeps track during sorting process of which team a student is associated with
@@ -125,6 +126,13 @@ class Student:
 		self.availability = graph
 		return None
 
+	def get_time_list(self):
+		return self.time_list
+
+	def add_to_time_list(self, daytime):
+		self.time_list.append(daytime)
+		return None
+
 	def setTeammates(self, buddies):
 		'''
 		input: buddies is a list of strings, the duck ID's of desired teammates
@@ -152,18 +160,13 @@ if __name__ == '__main__':
 	student.setCodeExperience('Javascript', 4)
 	student.setCodeExperience('C', 3)
 	print(student.getLanguages())
+	student.add_to_time_list('Monday 12:00 - 2:00')
+	student.add_to_time_list('Monday 2:00 - 4:00')
+	print(student.get_time_list())
 	
-
-	# testing availability attributes
-	print(student.getAvailability())
-	student.setAvailability('Thursday', '12:00-2:00')
-	print(student.getAvailability())
-	student.setAvailability('Thursday', '2:00-4:00')
-	print(student.getAvailability())
-
 	# testing requested teammates list
 	friend = Student('Jamie', 'jamie@yellow.edu')
 	student.setTeammates(friend)
-	for s in student.getTeammates():
-		print(s)
+	#for s in student.getTeammates():
+	#	print(s)
 	print(student)
