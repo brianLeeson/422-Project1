@@ -3,7 +3,8 @@ Author(s): Jamie Zimmerman + Amie Corso
 
 class Team:
 Team objects contain collections of Student objects.
-Team attributes are used to keep track of members, as well as store information about the quality and viability of the team.
+Team attributes are used to keep track of members (in a list), as well as store information about the quality and viability of the team. 
+Some of the methods are used in intermediate steps to determine if a potential team has a high enough score to be made into an actual team.
 Methods calculate and populate these attributes based on the characterists of the member Student objects.
 Note overwritten rich comparison methods.
 """
@@ -146,16 +147,25 @@ class Team:
 		self.team_name = team_name
 		return None
 	
-	def add_time_slot(daytime_slot):
+	def add_time_slot(self, daytime_slot):
 		'''
 		input -> string of a day and time, representing when the team will meet, i.e. "Monday 12:00 - 2:00"
 		function adds that string to the team's weekly meetups
 		'''
 		self.mutual_time_slots.append(daytime_slot)
 		return None
+	def get_time_slots(self):
+		return self.mutual_time_slots
 
+	def set_common_langs(self, lang):
+		self.common_langs.append(lang)
+		return None
+	def get_common_langs(self):
+		return self.common_langs
+		
 
 # -------------------------------------------- Sandbox Area --------------------------------------#
+# This code was used for testing purposes during initial development. It does not need to be saved.
 if __name__ == '__main__':
 	team = Team(6)
 	student1 = Student('brian', 'brian@brian.com')
