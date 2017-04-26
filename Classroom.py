@@ -147,43 +147,6 @@ class Classroom:
 			self.teamList.append(team)
 		return None
 
-	"""
-# Function has been replaced with version using Python's itertools module.
-	def generateAllTeams(self):
-		#Populates member list allViableTeams with all viable teams of 3.
-		print("\n\nRUNNING GENERATE_ALL_TEAMS()\n")
-		teamID = 0
-		for s1 in self.studentList:
-			for s2 in self.studentList:
-				for s3 in self.studentList:
-					if (s1 != s2 and s2 != s3 and s3 != s1):
-						newteam = Team.Team(teamID)
-						newteam.addMember(s1)
-						newteam.addMember(s2)
-						newteam.addMember(s3)
-						newteam.establish_metrics(self.min_acceptable_lang_proficiency, self.min_team_overlapping_langs,\
-									   self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor, self.request_factor)
-						if newteam.is_viable:
-							print("Team ", teamID, ": com_lang =", newteam.common_langs, " time_overlap =",
-								  newteam.time_overlap, " viability =", newteam.is_viable)
-							for member in newteam.member_list:
-								print(member.name, end=' ')
-							print()
-							self.allViableTeams.append(newteam)
-							# Giving each student a reference to the teams of which they are potentially a member.
-							s1.potential_teams.append(newteam)
-							s2.potential_teams.append(newteam)
-							s3.potential_teams.append(newteam)
-							teamID += 1
-
-		self.allViableTeams.sort()
-		self.allViableTeams.reverse()
-		print()
-		print("finished making teams")
-		print("length of team list: ", len(self.allViableTeams))
-		print()
-		return None
-"""
 
 	def performSort(self):
 		# first reset member attributes, in case this is not the first sort we are performing
@@ -538,7 +501,7 @@ class Classroom:
 				newteam.addMember(student)
 				student.assignedTeam = newteam
 			newteam.establish_metrics(self.min_acceptable_lang_proficiency, self.min_team_overlapping_langs, \
-									  self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor)
+									  self.min_team_overlapping_timeslots, self.schedule_factor, self.langs_factor, self.request_factor)
 			if newteam.is_viable:
 				self.place_good(newteam)
 			else: # newteam is not viable
