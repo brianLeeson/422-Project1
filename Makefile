@@ -30,11 +30,13 @@ run: env
 clean:
 	rm -rf __pycache__
 	rm -f team_decisions.csv
+	clear > log.txt
+	rm -f log.txt
 
 veryclean:
 	make clean
 	rm -rf env
-	clear > log.txt
+
 
 # Developer tools
 #

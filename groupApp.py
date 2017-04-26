@@ -154,7 +154,7 @@ description = tk.Frame(mainFrame, bd=1)
 description.grid(row=3, column=0, columnspan=3)
 
 descriptionText = "Surveys in csv form can be imported, sorted into teams and" \
-					" exported as a csv for further changes if needed."
+					" exported as a csv to the cwd for further changes if needed."
 descriptionLabel = tk.Label(description, text=descriptionText, wraplength=200)
 descriptionLabel.grid(row=0, column=0)
 
