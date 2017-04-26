@@ -1,6 +1,20 @@
 """
 Author(s): Brian Leeson + Jamie Zimmerman + Amie Corso
 
+Student.py holds a class Student that serves as a way to store data in main memory. We created our own object type to hold information about each student, the most important information being their name, their meeting time freedom, and their programming language skill. Each instantiation represents a student in a CIS422 course. The information is gathered via a Google survey.
+
+name
+duckID -> specific to each student
+codeExperience -> a dictionary mapping a particular language to approximate rated skill
+availability -> dictionary mapping days to a list of zeros and ones, which correspond to the time slots 10:00-12:00, 12:00-2:00, 2:00-4:00, and 4:00-6:00
+requests -> duckIDs of desired teammates
+potential_teams -> a list of Team objects in which a student could belong on - these slowly disappear as the algorithm determines that the Team is unviable.
+assignedTeam -> whichever Team the student ends up on
+
+Notes for fellow/future developers:
+Read the comments and docstrings - you don't need to know how the functions or methods work or what attribute methods serve for.
+In general, this module has little to it besides attributes and getter/setter methods. It is mostly used as a container because no other data object served our purposes as well as building our own.
+
 """
 
 
@@ -9,15 +23,10 @@ class Student:
 	This class will represent an individuals survey results
 	"""
 
-	# NOTE: I think that any attribute of Student that could be a list should be a tuple.
-	# There might be some aliasing issues we could nip in the bud if we chose tuples
-	# from Amie:  only note on this is that the potential_teams attritube needs to be mutable (list)
-
 	def __init__(self, name, duckID):
 		self.name = name
 		self.duckID = duckID #Use this attribute as a unique identifier
 
-		self.overallExperience = 0  # overall experience score - how many upper div CS classes completed
 		self.codeExperience = {'Python': 0, 'Java': 0, 'Javascript': 0, 'C': 0, 'C++': 0, 'PHP': 0, 'HTML': 0, 'SQL': 0, 'Bash/Unix': 0}
 		self.availability = {'Monday': [], #values are list of 0s and 1s representing true availability for time slots 
 					'Tuesday': [],
@@ -74,19 +83,23 @@ class Student:
 		self.duckID = duckID
 		return None
 
-	def getOverallExperience(self):
-		return self.overallExperience
-
-	def setOverallExperience(self, exp):
-		self.overallExperience = exp
-		return None
-
 	def getCodeExperience(self):
 		'''
 		output -> dictionary mapping languages to integer rating of skill
 		ex: dict = {'Python': 5 ... and so on}
 		'''
 		return self.codeExperience
+	
+
+	def getLanguages(self):
+		'''
+		output -> list of student's proficient coding languages, i.e. self rated skill is 3 or higher
+		'''
+		languages = []
+		for language, skill in self.codeExperience.items():
+			if skill > 2:
+				languages.append(language)
+		return languages
 
 	def setCodeExperience(self, tool, capability):
 		'''
@@ -94,7 +107,7 @@ class Student:
 			capability - string OR int that is integer rating of skill
 		this function sets the student's particular language skill to a rating, casting the rating to an int as a safety measure
 		'''
-		self.codeExperience[tool] = capability
+		self.codeExperience[tool] = int(capability)
 		return None
 
 	def getAvailability(self):
@@ -112,7 +125,6 @@ class Student:
 		self.availability = graph
 		return None
 
-#________________________ FIX_______________________
 	def setTeammates(self, buddies):
 		'''
 		input: buddies is a list of strings, the duck ID's of desired teammates
@@ -121,6 +133,9 @@ class Student:
 		return None
 
 	def addTeammate(self, buddy):
+		'''
+		input is a string, a singular duckID of one person requested
+		'''
 		self.teammates.append(buddy)
 		return None
 
@@ -129,12 +144,15 @@ class Student:
 
 
 # -----------------------------------Sandbox Area -------------------------------------------------#
+# This code here was used for testing purposes during initial development. It does not need to be saved.
 if __name__ == '__main__':
 	student = Student('Brian', 'brian@brian.com')
-	student.setCodeExperience('Python', 8)
-	print(student.getCodeExperience())
-	student.setOverallExperience(4)
-	print('{} is this qualified: {}'.format(student.getName(), student.getOverallExperience()))
+	student.setCodeExperience('Python', 5)
+	student.setCodeExperience('Java', 2)
+	student.setCodeExperience('Javascript', 4)
+	student.setCodeExperience('C', 3)
+	print(student.getLanguages())
+	
 
 	# testing availability attributes
 	print(student.getAvailability())
