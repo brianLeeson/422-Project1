@@ -44,7 +44,7 @@ def sortCB():
 		global PATH
 
 		size = int(numStudentSpin.get())
-		inRange = (2 <= size) and (size <= 5)
+		inRange = (2 <= size) and (size <= 7)
 
 		# if a path to a survey csv exists
 		if len(PATH) and inRange:
@@ -146,7 +146,7 @@ numStudentFrame.grid(row=2, column=0, columnspan=3)
 numStudentLabel = tk.Label(numStudentFrame, text="Group Size: ")
 numStudentLabel.grid(row=0, column=0)
 
-numStudentSpin = tk.Spinbox(numStudentFrame, from_=2, to=5)
+numStudentSpin = tk.Spinbox(numStudentFrame, from_=2, to=7)
 numStudentSpin.delete(0, 2)
 numStudentSpin.insert(0, 3)
 numStudentSpin.grid(row=0, column=1)
