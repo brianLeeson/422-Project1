@@ -15,19 +15,25 @@ class Student:
 
 	def __init__(self, name, duckID):
 		self.name = name
-		self.duckID = duckID #Use this attribute as a unique identifier
+		self.duckID = duckID  # Use this attribute as a unique identifier
 
 		self.overallExperience = 0  # overall experience score - how many upper div CS classes completed
-		self.codeExperience = {'Python': 0, 'Java': 0, 'Javascript': 0, 'C': 0, 'C++': 0, 'PHP': 0, 'HTML': 0, 'SQL': 0, 'Bash/Unix': 0}
-		self.availability = {'Monday': [], #values are list of 0s and 1s representing true availability for time slots 
-					'Tuesday': [],
-					'Wednesday': [],
-					'Thursday': [],
-					'Friday': []}
+		self.codeExperience = {
+			'Python': 0, 'Java': 0, 'Javascript': 0, 'C': 0, 'C++': 0,
+			'PHP': 0, 'HTML': 0, 'SQL': 0,'Bash/Unix': 0}
+		# values are list of 0s and 1s representing true availability for time slots
+		self.availability = {
+								'Monday': [],
+								'Tuesday': [],
+								'Wednesday': [],
+								'Thursday': [],
+								'Friday': []
+		}
 		self.requests = []  # list of strings - duckIDs of desired teammates
-		self.potential_teams = [] # used during sorting process to keep track of which teams on which a student COULD appear
+		self.potential_teams = []  # used during sorting process to keep track of which teams on which a student COULD appear
 		self.assignedTeam = None  # keeps track during sorting process of which team a student is associated with
-								  # final once the sorting process is complete
+		# final once the sorting process is complete
+		self.teammates = []
 
 	def sort_potential_teams(self):
 		self.potential_teams.sort()
@@ -38,7 +44,7 @@ class Student:
 		return self.getName()
 
 	def __cmp__(self, other):
-		return self.getUID() == other.getUID()
+		return self.getduckID() == other.getduckID()
 
 	def __lt__(self, other):
 		return len(self.potential_teams) < len(other.potential_teams)
@@ -51,12 +57,6 @@ class Student:
 
 	def __ge__(self, other):
 		return len(self.potential_teams) >= len(other.potential_teams)
-
-	#def __eq__(self, other):
-		#return self.getUID == other.getUID
-
-	#def __ne__(self, other):
-		#return self.getUID != other.getUID
 
 	def getName(self):
 		return self.name
@@ -87,42 +87,40 @@ class Student:
 		return None
 
 	def getCodeExperience(self):
-		'''
+		"""
 		output -> dictionary mapping languages to integer rating of skill
 		ex: dict = {'Python': 5 ... and so on}
-		'''
+		"""
 		return self.codeExperience
 
 	def setCodeExperience(self, tool, capability):
-		'''
+		"""
 		input -> tool - string of a coding lanugage i.e.: 'Python'
 			capability - string OR int that is integer rating of skill
 		this function sets the student's particular language skill to a rating, casting the rating to an int as a safety measure
-		'''
+		'"""
 		self.codeExperience[tool] = capability
 		return None
 
 	def getAvailability(self):
-		'''
+		"""
 		output -> dictionary representation of student's availability chart
 			may want to add specifying parameters that narrow down for a certain day
-		'''
+		"""
 		return self.availability
 
 	def setAvailability(self, graph):
-		'''
+		"""
 		input -> graph is an entire dictionary representing the student's entire weeklong availability
-			#TODO build helper function that takes extra parameter of specific day and time slot, and adds that to a student's availability
-		'''
+		"""
 		self.availability = graph
 		return None
 
-#________________________ FIX_______________________
 	def setTeammates(self, buddies):
-		'''
+		"""
 		input: buddies is a list of strings, the duck ID's of desired teammates
-		'''
-		self.teammates = buddies;
+		"""
+		self.teammates = buddies
 		return None
 
 	def addTeammate(self, buddy):
@@ -143,9 +141,9 @@ if __name__ == '__main__':
 
 	# testing availability attributes
 	print(student.getAvailability())
-	student.setAvailability('Thursday', '12:00-2:00')
+	student.setAvailability('Thursday')
 	print(student.getAvailability())
-	student.setAvailability('Thursday', '2:00-4:00')
+	student.setAvailability('Thursday')
 	print(student.getAvailability())
 
 	# testing requested teammates list

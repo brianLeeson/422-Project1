@@ -154,10 +154,10 @@ class Team:
 		return None
 	
 	def add_time_slot(self, daytime_slot):
-		'''
+		"""
 		input -> string of a day and time, representing when the team will meet, i.e. "Monday 12:00 - 2:00"
 		function adds that string to the team's weekly meetups
-		'''
+		"""
 		self.mutual_time_slots.append(daytime_slot)
 		return None
 
