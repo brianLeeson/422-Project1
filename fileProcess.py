@@ -1,5 +1,7 @@
 """
 Author(s): Jamie Zimmerman
+This file is responsible for parsing csv on import into students for the gui to use.
+Then, when sorting is complete, this file handles exporting data back to a csv.
 
 This module is responsible for the intake of survey data and export of optimal team decisions.
 
@@ -26,47 +28,52 @@ def process(fileName):
 	with open(fileName, "r") as csvfile:
 		reader = csv.DictReader(csvfile)
 		languages = ['Python', 'Java', 'Javascript', 'C', 'C++', 'PHP', 'HTML', 'SQL', 'Bash/Unix']
-		survey_headers = ['Python experience', 'Java experience', 'Javascript experience', 'C experience', 'C++ experience', 'PHP experience', 'HTML experience', 'SQL experience', 'Bash/Unix experience']
-		
+		survey_headers = [
+							'Python experience', 'Java experience', 'Javascript experience', 'C experience',
+							'C++ experience', 'PHP experience', 'HTML experience', 'SQL experience',
+							'Bash/Unix experience'
+						]
+
 		for row in reader:
-			#parse time availability data
+			# parse time availability data
 			mon = row['Monday']
 			tues = row['Tuesday']
 			wed = row['Wednesday']
 			thurs = row['Thursday']
 			fri = row['Friday']
 
-			#get student's requested groupmates
+			# get student's requested groupmates
 			requests = row["Desired Teammates DuckIDs (separated by ';')"].split(';')
-
-			#create a student object
+			# create a student object
 			student = Student(row['Student Name'], row['Your DuckID'])
-			for i in range(9):  # the provided survey lists the 9 major languages most applicable/favorable to a group of upperdiv CS students
+			for i in range(9):
 				student.setCodeExperience(languages[i], int(row[survey_headers[i]]))
-				#print('{} for tool {} has skill {}'.format(student.getName(), languages[i], row[survey_headers[i]]))
 
 			student.setAvailability(create_time_chart([mon, tues, wed, thurs, fri]))
-			student.setRequests(requests) # It's ok that this is just a list of duckIDs and not student objects
+			student.setRequests(requests)  # It's ok that this is just a list of duckIDs and not student objects
 
 			studentList.append(student)
 
 	return studentList
 
 
-#helper function to process student availability into binary representation
+# helper function to process student availability into binary representation
 def create_time_chart(day_availability_list):
 	"""
-	input  - list of day's time slots, ex: ["10:00-12:00;2:00-4:00", "2:00-4:00;4:00-6:00", "10:00-12:00;4:00-6:00", "None", "10:00-12:00;2:00-4:00"]
-		the first item in the list is Monday, then Tuesday, etc... (the function zips this with in-order days so that the data is not scrambled)
+	input  - list of day's time slots, ex: ["10:00-12:00;2:00-4:00", "2:00-4:00;4:00-6:00", "10:00-12:00;4:00-6:00", 
+		"None", "10:00-12:00;2:00-4:00"]
+		the first item in the list is Monday, then Tuesday, etc... (the function zips this with in-order days so that 
+		the data is not scrambled)  
 		within each 'day' is a semicolon separated list of available times slots
 	this function parses that availability into a binary representation
 	output - dictionary - entire dictionary representing student's availability
 		key: days (Monday, Tuesday, etc.)
 		value: a list of 0's and 1's, which indicates which times slots are open for that student
 		ex: "Monday":[0, 1, 1, 0, 0] means that the student is available on Monday from 12:00-2:00& 2:00-4:00
-		the list should only be 5 spaces long, representing 4 time slots(10-12, 12-2, 2-4, 4-6) and None, meaning no time available
-		example usage: student.setAvailability(create_time_chart(day_availability_list))
+		the list should only be 5 spaces long, representing 4 time slots(10-12, 12-2, 2-4, 4-6) and None, meaning 
+		no time available example usage: student.setAvailability(create_time_chart(day_availability_list))
 	"""
+
 	days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 	pre_chart = dict(zip(days, day_availability_list))
 	chart = dict()
@@ -75,13 +82,13 @@ def create_time_chart(day_availability_list):
 		new_li = [0 for i in range(5)]
 		for slot in times:
 			if slot == "10:00 - 12:00":
-				new_li[0]=1
+				new_li[0] = 1
 			elif slot == "12:00 - 2:00":
-				new_li[1]=1
+				new_li[1] = 1
 			elif slot == "2:00 - 4:00":
-				new_li[2]=1
+				new_li[2] = 1
 			elif slot == "4:00 - 6:00":
-				new_li[3]=1
+				new_li[3] = 1
 			else:  # No available time
 				new_li[0:] = [0 for i in range(5)]
 		chart[day] = new_li
@@ -103,15 +110,16 @@ def export(decided_teams):
 			teammates = team.getMemberList()
 			entry = {'Team Number': i, 'Student 1': teammates[0]}
 			if len(teammates) >= 2:
-				entry['Student 2']= teammates[1]
+				entry['Student 2'] = teammates[1]
 				if len(teammates) >= 3:
-					entry['Student 3']= teammates[2]
+					entry['Student 3'] = teammates[2]
 					if len(teammates) >= 4:
-						entry['Student 4']= teammates[3]
+						entry['Student 4'] = teammates[3]
 			writer.writerow(entry)
 			i += 1
-	
+
 	return None
+
 
 # ----------------------Sandbox Area--------------------------------------
 if __name__ == '__main__':
