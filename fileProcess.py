@@ -122,26 +122,6 @@ def export(decided_teams):
 						'student coding languages': guy.getLanguages()})
 			i += 1
 	return None
-	"""
-	with open('team_decisions.csv', 'w') as csvfile:
-		fieldnames = ['Team Number', 'Student 1', 'Student 2', 'Student 3', 'Student 4']
-		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-		writer.writeheader()
-		i = 1
-		for team in decided_teams:
-			teammates = team.getMemberList()
-			entry = {'Team Number': i, 'Student 1': teammates[0]}
-			if len(teammates) >= 2:
-				entry['Student 2'] = teammates[1]
-				if len(teammates) >= 3:
-					entry['Student 3'] = teammates[2]
-					if len(teammates) >= 4:
-						entry['Student 4'] = teammates[3]
-			writer.writerow(entry)
-			i += 1
-
-	return None
-	"""
 
 
 # ----------------------Sandbox Area--------------------------------------
