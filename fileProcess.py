@@ -104,7 +104,10 @@ def export(decided_teams):
 	"""
 	input-> list of Team objects
 	function writes teams as a csv to cwd
-	Each team is a new header in the csv file for readability. For example, the first row has the team number, a header for the student's availability, a header for the student's best programming languages, a header describing the team's matching meeting times, and a header listing the team's matching programming languages. For example, in the csv file, say there are two teams. When the file is opened in Excel, it looks like:
+	Each team is a new header in the csv file for readability. For example, the first row has the team number,
+	a header for the student's availability, a header for the student's best programming languages, a header 
+	describing the team's matching meeting times, and a header listing the team's matching programming languages. 
+	For example, in the csv file, say there are two teams. When the file is opened in Excel, it looks like:
 	
 	<Team 1> <student time availability> <student coding languages> <team's meeting times: ['Monday 12:00 - 2:00', 'Thursday 4:00 - 6:00']> <team languages: ['PHP', 'SQL']
 	Susie Shunpike ['Monday 12:00 - 2:00', 'Thursday 4:00 - 6:00'] ['PHP', 'SQL', 'Java', 'C']
@@ -114,7 +117,9 @@ def export(decided_teams):
 	<Team 2> ...
 
 
-	and so on. Having additional information is useful for the teacher so that they can see exactly when team's can meet and what their best skills are. Morever, if the teacher wants to make manual changes to the teams, the information is right on hand about when a student is free.
+	and so on. Having additional information is useful for the teacher so that they can see exactly when teams 
+	can meet and what their best skills are. Morever, if the teacher wants to make manual changes to the teams, 
+	the information is right on hand about when a student is free.
 
 	
 	output-> None, writing the file is a side effect
