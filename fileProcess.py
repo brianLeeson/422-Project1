@@ -5,9 +5,20 @@ Then, when sorting is complete, this file handles exporting data back to a csv.
 
 This module is responsible for the intake of survey data and export of optimal team decisions.
 
-process method intakes a csv file. No active other part of our program is currently responsible for collecting that data besides a Google survey that is provided in the repo for the user when they download and install our app. It is critical that the teacher use the Google Survey provided as the headers in it are hard-coded in this module. Using the csv library, the process method reads the appropriate data and instantiates the necessary objects. Each row in the survey results is one student's answers, so for each row we instantiate a Student object.
+process method intakes a csv file. No active other part of our program is currently responsible 
+for collecting that data besides a Google survey that is provided in the repo for the user when 
+they download and install our app. It is critical that the teacher use the Google Survey provided 
+as the headers in it are hard-coded in this module. Using the csv library, the process method 
+reads the appropriate data and instantiates the necessary objects. Each row in the survey results 
+is one student's answers, so for each row we instantiate a Student object.
 
-export method gets a list of final team objects and writes them to a csv file, provided for the teacher's use. Each row is a Team, and it lists not only the students in it but each student's meeting time/coding experience and the team's matching qualities. By providing more granular information, the teacher can look realistically at the teams and then personally make changes to Teams as he/she deems fit. The algorithm performs well, but can't read the mind of the teacher. For example if the teacher knows that certain students despise each other, then he/she can manually check if they are on a team, and if so, make changes, with more granular information on hand.
+export method gets a list of final team objects and writes them to a csv file, provided for the 
+teacher's use. Each row is a Team, and it lists not only the students in it but each student's 
+meeting time/coding experience and the team's matching qualities. By providing more granular 
+information, the teacher can look realistically at the teams and then personally make changes to 
+Teams as he/she deems fit. The algorithm performs well, but can't read the mind of the teacher. 
+For example if the teacher knows that certain students despise each other, then he/she can manually 
+check if they are on a team, and if so, make changes, with more granular information on hand.
 
 """
 
@@ -28,11 +39,9 @@ def process(fileName):
 	with open(fileName, "r") as csvfile:
 		reader = csv.DictReader(csvfile)
 		languages = ['Python', 'Java', 'Javascript', 'C', 'C++', 'PHP', 'HTML', 'SQL', 'Bash/Unix']
-		survey_headers = [
-							'Python experience', 'Java experience', 'Javascript experience', 'C experience',
-							'C++ experience', 'PHP experience', 'HTML experience', 'SQL experience',
-							'Bash/Unix experience'
-						]
+		survey_headers = ['Python experience', 'Java experience', 'Javascript experience', 'C experience',
+				'C++ experience', 'PHP experience', 'HTML experience', 'SQL experience',
+				'Bash/Unix experience']
 
 		for row in reader:
 			# parse time availability data
