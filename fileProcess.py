@@ -48,7 +48,12 @@ def process(fileName):
 			student = Student(row['Student Name'], row['Your DuckID'])
 			for i in range(9):
 				student.setCodeExperience(languages[i], int(row[survey_headers[i]]))
-
+			#to add non-binary listing of student's time availability
+			student.add_to_time_list('Monday ' + mon)
+			student.add_to_time_list('Tuesday ' + tues)
+			student.add_to_time_list('Wednesday  ' + wed)
+			student.add_to_time_list('Thursday ' + thurs)
+			student.add_to_time_list('Friday ' + fri)
 			student.setAvailability(create_time_chart([mon, tues, wed, thurs, fri]))
 			student.setRequests(requests)  # It's ok that this is just a list of duckIDs and not student objects
 
@@ -101,6 +106,23 @@ def export(decided_teams):
 	function writes teams as a csv to cwd
 	output-> None, writing the file is a side effect
 	"""
+	with open('team_decisions.csv', 'w') as out_file:
+		i = 1
+		for team in decided_teams:
+			fieldnames = ['Team {}'.format(i),
+					'student time availability',
+					'student coding languages',
+					"team's meeting times: {}". format(str(team.get_time_slots())),
+					'team languages: {}'.format(team.get_common_langs())]
+			writer = csv.DictWriter(out_file, fieldnames=fieldnames)
+			writer.writeheader()
+			for guy in team.getMemberList():
+				writer.writerow({'Team {}'.format(i): guy.getName(),
+						'student time availability': guy.get_time_list(),
+						'student coding languages': guy.getLanguages()})
+			i += 1
+	return None
+	"""
 	with open('team_decisions.csv', 'w') as csvfile:
 		fieldnames = ['Team Number', 'Student 1', 'Student 2', 'Student 3', 'Student 4']
 		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -119,17 +141,19 @@ def export(decided_teams):
 			i += 1
 
 	return None
+	"""
 
 
 # ----------------------Sandbox Area--------------------------------------
 if __name__ == '__main__':
 	# THIS CODE NEVER NEEDS TO BE SAVED, JUST A WORKSPACE AREA
-	stu_li = process('fake_422_data.csv')
+	stu_li = process('test_cases/one_extra.csv')
 	for guy in stu_li:
 		print(guy)
 		print(guy.getAvailability())
 		print(guy.getCodeExperience())
 		print(guy.getTeammates())
+		print(guy.get_time_list())
 	team1 = Team(1)
 	team1.setMemberList(stu_li[0:3])
 	team2 = Team(2)
