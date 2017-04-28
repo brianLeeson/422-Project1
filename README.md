@@ -43,8 +43,7 @@ To run the application:
  ### Platforms:
 This application has successfully been run on the following platforms:
  * macOS 10.12 ~ Python 3.5
- * Ubuntu ~ Python 3.5 (whichever Brian's machine is) 
- * macOS (whichever Amie has)
+ * Ubuntu 16.0 ~ Python 3.5 
  * this program successfully runs when logged in to Desktop machines in Deschutes 100 - the OS must have a Desktop to run!
 ### Details:
 The soring algorithm accommodates class sizes up to 90 students and team sizes on the range [2, 7].
