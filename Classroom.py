@@ -148,7 +148,6 @@ class Classroom:
 		for team in self.assignedTeams_bad:
 			self.teamList.append(team)
 		return None
-<<<<<<< HEAD
 	"""
 
 # -------------------- DEPRECATED FUNCTION ----------------------------------#
@@ -179,9 +178,7 @@ class Classroom:
 							s2.potential_teams.append(newteam)
 							s3.potential_teams.append(newteam)
 							teamID += 1
-=======
->>>>>>> 1c087b694e3e2b7a6bec5c1913c5cf239a3d175f
-
+		"""
 	def performSort(self):
 		# first reset member attributes, in case this is not the first sort we are performing
 		self.assignedStudents_viable = []
