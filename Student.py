@@ -107,13 +107,8 @@ class Student:
 		input -> tool - string of a coding lanugage i.e.: 'Python'
 			capability - string OR int that is integer rating of skill
 		this function sets the student's particular language skill to a rating, casting the rating to an int as a safety measure
-<<<<<<< HEAD
-		'''
-		self.codeExperience[tool] = int(capability)
-=======
-		'"""
+		"""
 		self.codeExperience[tool] = capability
->>>>>>> e5ce343fadd0ab55a98334c47c2daf0c559cd479
 		return None
 
 	def getAvailability(self):
@@ -130,7 +125,6 @@ class Student:
 		self.availability = graph
 		return None
 
-<<<<<<< HEAD
 	def get_time_list(self):
 		return self.time_list
 
@@ -138,8 +132,6 @@ class Student:
 		self.time_list.append(daytime)
 		return None
 
-=======
->>>>>>> e5ce343fadd0ab55a98334c47c2daf0c559cd479
 	def setTeammates(self, buddies):
 		"""
 		input: buddies is a list of strings, the duck ID's of desired teammates
@@ -162,7 +154,6 @@ class Student:
 # This code here was used for testing purposes during initial development. It does not need to be saved.
 if __name__ == '__main__':
 	student = Student('Brian', 'brian@brian.com')
-<<<<<<< HEAD
 	student.setCodeExperience('Python', 5)
 	student.setCodeExperience('Java', 2)
 	student.setCodeExperience('Javascript', 4)
@@ -172,12 +163,8 @@ if __name__ == '__main__':
 	student.add_to_time_list('Monday 2:00 - 4:00')
 	print(student.get_time_list())
 	
-=======
 	student.setCodeExperience('Python', 8)
 	print(student.getCodeExperience())
-	student.setOverallExperience(4)
-	print('{} is this qualified: {}'.format(student.getName(), student.getOverallExperience()))
-
 	# testing availability attributes
 	print(student.getAvailability())
 	student.setAvailability('Thursday')
@@ -185,7 +172,6 @@ if __name__ == '__main__':
 	student.setAvailability('Thursday')
 	print(student.getAvailability())
 
->>>>>>> e5ce343fadd0ab55a98334c47c2daf0c559cd479
 	# testing requested teammates list
 	friend = Student('Jamie', 'jamie@yellow.edu')
 	student.setTeammates(friend)
