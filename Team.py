@@ -73,6 +73,7 @@ class Team:
 		A timeslot is considered overlapping if all members of the team have indicated availability. Called by establish_metrics().
 		"""
 		overlap = 0
+		time_basics = ["10:00 - 12:00", '12:00 - 2:00', '2:00 - 4:00', '4:00 - 6:00']
 		dayslist = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 		for day in dayslist:
 			member_avails = [] # collect sublists: each member's availability list for a given day
@@ -86,6 +87,7 @@ class Team:
 						overlapping = False
 				if overlapping:
 					overlap += 1
+					self.add_time_slot(day + ' ' + time_basics[i])
 		self.time_overlap = overlap
 		return None
 
@@ -159,7 +161,8 @@ class Team:
 		input -> string of a day and time, representing when the team will meet, i.e. "Monday 12:00 - 2:00"
 		function adds that string to the team's weekly meetups
 		"""
-		self.mutual_time_slots.append(daytime_slot)
+		if not daytime_slot in self.mutual_time_slots: # don't add duplicates
+			self.mutual_time_slots.append(daytime_slot)
 		return None
 	def get_time_slots(self):
 		return self.mutual_time_slots
@@ -181,3 +184,4 @@ if __name__ == '__main__':
 	team.setMemberList([student1, student2, student3])
 	for guy in team.getMemberList():
 		print(guy)
+	
